@@ -32,4 +32,30 @@ function afficherTravaux(travaux) {
     figure.appendChild(figcaption);
     gallery.appendChild(figure);
   });
-}
+} 
+
+fetch('http://localhost:5678/api/categories')
+.then(response=> response.json())
+.then(categories=> { 
+const filtersContainer = document.querySelector('.filters');
+const boutonsTous = document.createElement('button');
+boutonsTous.innerText='Tous';
+boutonsTous.addEventListener('click',() => {
+    afficherTravaux(travaux);
+});
+
+filtersContainer.appendChild(boutonsTous);
+
+categories.forEach(categorie=> { 
+    const button = document.createElement('button');
+    button.innerText=categorie.name;
+    button.addEventListener('click',() => { 
+    const travauxFiltres = travaux.filter(t=> t.category.id === categorie.id);
+    afficherTravaux(travauxFiltres);
+
+    });
+    filtersContainer.appendChild(button);
+});
+
+}) 
+.catch(err=> console.error(err)); 
