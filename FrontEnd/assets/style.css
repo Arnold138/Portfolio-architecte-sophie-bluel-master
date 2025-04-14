@@ -214,4 +214,9 @@ footer nav ul {
 nav ul a {
     text-decoration: none;
     color: inherit;
+} 
+
+.hidden {
+		display: none; 
+
 }
