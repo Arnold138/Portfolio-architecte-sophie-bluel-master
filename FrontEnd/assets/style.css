@@ -206,6 +206,6 @@ footer nav ul {
 } 
 
 .filters button:hover {
-	background-color: #1D6154; /* quand on survole */
-	color: #fff; /* le texte devient blanc */
+	background-color: #1D6154; 
+	color: #fff; 
   }
