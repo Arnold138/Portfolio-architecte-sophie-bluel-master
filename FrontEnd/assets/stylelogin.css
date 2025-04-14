@@ -154,4 +154,23 @@ button {
     width: 175px;
     font-family: 'Syne';
     font-size: 14px;
+} 
+
+
+.submit-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 13px;
+}
+
+.submit-container a {
+    color: inherit;
+    font-family: 'Work Sans';
+    font-size: 16px;
+}
+
+nav a {
+    text-decoration: none;
+    color: inherit;
 }
