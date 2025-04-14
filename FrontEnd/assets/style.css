@@ -190,7 +190,7 @@ footer nav ul {
 .filters {
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 10px;
     margin-bottom: 40px;
 }
 
@@ -200,4 +200,12 @@ footer nav ul {
     width: fit-content;
     font-family: 'Syne';
     color: #1D6154;
-}
+    white-space: nowrap;
+    font-size: 16px;
+    padding: 10px 30px 10px 30px;
+} 
+
+.filters button:hover {
+	background-color: #1D6154; /* quand on survole */
+	color: #fff; /* le texte devient blanc */
+  }
