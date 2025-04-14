@@ -37,7 +37,12 @@ function afficherTravaux(travaux) {
 fetch('http://localhost:5678/api/categories')
 .then(response=> response.json())
 .then(categories=> { 
+
+
 const filtersContainer = document.querySelector('.filters');
+const nomsCategories=categories.map(categorie=> categorie.name);
+const uniqueNames = [...new Set(nomsCategories)];
+
 const boutonsTous = document.createElement('button');
 boutonsTous.innerText='Tous';
 boutonsTous.addEventListener('click',() => {
