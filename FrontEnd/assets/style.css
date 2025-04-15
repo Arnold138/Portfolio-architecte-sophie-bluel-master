@@ -221,18 +221,16 @@ nav ul a {
 
 } 
 
-.modal-content .modal-title { 
-
-	font-size:24px; 
-	margin-bottom:20px;
-	text-align:center;
-} 
+.modal-content .modal-title {font-size: 26px;margin-bottom: 27px;text-align:center;color: black;font-family: 'Work Sans';font-weight: 400;} 
 
 .projects-container {
-	display: flex; 
+	display: flex;
 	flex-wrap: wrap;
-	gap: 10px;
-	justify-content: center;
+	gap: 17px;
+	justify-content: flex-start;
+	width: 84%;
+	margin-left: 13%;
+	padding: 0px;
 } 
 
 .project-item { 
@@ -247,14 +245,14 @@ nav ul a {
 	border-radius: 4px;
 } 
 
-.delete-icon { 
+.delete-icon {
 	position: absolute;
-	top: 5px;
-	right: 5px;
+	top: 2px;
+	right: 0px;
 	cursor: pointer;
-	background: rgba(255, 255, 255, 0.8);
-	border-radius: 40%;
-	padding:3px;
+	background: rgb(18 13 13 / 80%);
+	border-radius: 34%;
+	padding: 0px;
 	font-size:18px;
 } 
 
@@ -275,7 +273,7 @@ nav ul a {
 	justify-content: center;
 	align-items: center;
 	z-index: 9999;            /* au-dessus de tout */
-  }
+	}
   
   /* Contenu de la modale, placé au centre */
   .modal-content {
@@ -284,8 +282,9 @@ nav ul a {
 	border-radius: 8px;
 	position: relative; /* permet de positionner la croix */
 	width: 90%;
-	max-width: 600px;
-  } 
+	max-width: 630px;
+	height: 640px;
+	} 
 
 /* placement du titre + boutton de la modale */
 .titre {
@@ -306,4 +305,9 @@ button#openModalBtn {
 .titre img {
     width: 22%;
     font-weight: 400;
+} 
+
+span.close {
+    display: flex;
+    justify-content: end;
 }
