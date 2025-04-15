@@ -64,3 +64,72 @@ categories.forEach(categorie=> {
 
 }) 
 .catch(err=> console.error(err)); 
+
+/* et affichage des projets et mise en place de la modale  */
+
+function afficherTravaux(travaux) {
+  const projectsContainer= document.querySelector('.projects-container');
+  projectsContainer.innerHTML=''; /* vide le conteneur avant d'ajouter les nouveaux projets */
+  travaux.forEach(travail=> {
+
+    const projectItem = document.createElement('div');
+    projectItem.classList.add('project-item');
+
+    const img = document.createElement('img'); /* crée un élément img */
+    img.src=travail.imageUrl;
+    img.alt=travail.title;
+
+    /* on crée l'icone de suppression des projects*/ 
+    const deleteIcon = document.createElement('span');
+    deleteIcon.classList.add('delete-icon');
+    deleteIcon.innerHTML="🗑️" /* émoji corbeille essaie injection*/
+    deleteIcon.addEventListener('click',() => {
+      supprimerProjet(travail.id); /* fonction suppresion*/
+    });
+
+    projectItem.appendChild(img); 
+    projectItem.appendChild(deleteIcon);
+    projectsContainer.appendChild(projectItem);
+
+   });
+  } 
+
+  /* fonction de suppression d'un projet */
+
+  function supprimerProjet(projetId) { 
+    fetch(`http://localhost:5678/api/works/${projetId}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    })
+    .then(response => { 
+      if (!response.ok) {
+        throw new Error('Erreur lors de la suppression du projet');
+      }
+        alert('Projet supprimé avec succès');
+        /* raffraichir la galerie */
+    })
+    .catch(err =>{ 
+      console.error(err);
+      alert('Erreur lors de la suppression du projet');
+    });
+  } 
+
+  document.addEventListener('DOMContentLoaded', () => { 
+
+    /* verifie si l'utilisateur est connecté en mode admin */
+    if (localStorage.getItem('token')) { 
+      document.getElementById('openModalBtn').style.display='block'; /* affiche le bouton d'ajout de projet */
+    } else { 
+      document.getElementById('openModalBtn').style.display='none';
+    } 
+
+    /* on atache l'evenement click sur le bouton d'ajout de projet */
+    document.getElementById('openModalBtn').addEventListener('click',openModal);
+
+    /* on atache l'evenement click sur le bouton de fermeture de la modale */
+    const closeBtn = document.querySelector('.modal-content .close');
+    closeBtn.addEventListener('click',closeModal);
+
+  }) 
