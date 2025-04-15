@@ -97,6 +97,10 @@ function afficherTravauxModal(travaux) {
   function openModal() {
     document.getElementById("modal-modif").classList.remove("hidden");
     afficherTravauxModal(travaux); // On utilise la version "modale"
+  } 
+  function closeModal() {
+    const modal = document.getElementById("modal-modif");
+    modal.classList.add("hidden");
   }
   /* fonction de suppression d'un projet */
 
