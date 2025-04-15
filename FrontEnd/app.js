@@ -17,10 +17,11 @@ fetch('http://localhost:5678/api/works')
   console.error("Erreur:",error);
 }) 
 
-function afficherTravaux(travaux) { 
+function afficherTravauxMain(travaux) { 
 
   const gallery= document.querySelector('.gallery');
   gallery.innerHTML=''; 
+
   travaux.forEach(travail=> { 
     const figure=document.createElement('figure');
     const img = document.createElement('img');
@@ -67,7 +68,7 @@ categories.forEach(categorie=> {
 
 /* et affichage des projets et mise en place de la modale  */
 
-function afficherTravaux(travaux) {
+function afficherTravauxModal(travaux) {
   const projectsContainer= document.querySelector('.projects-container');
   projectsContainer.innerHTML=''; /* vide le conteneur avant d'ajouter les nouveaux projets */
   travaux.forEach(travail=> {
