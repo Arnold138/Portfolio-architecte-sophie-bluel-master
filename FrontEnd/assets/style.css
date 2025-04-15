@@ -288,19 +288,22 @@ nav ul a {
   } 
 
 /* placement du titre + boutton de la modale */
-  .titre {
+.titre {
     display: flex;
     justify-content: center;
-    gap: 16px;
+    gap: 18px;
 }
 
 button#openModalBtn {
     border: 0;
     padding-bottom: 27px;
-    font-size: 16px;
+    font-size: 14px;
     white-space: nowrap;
+    font-family: 'Work Sans';
+    background-color: white;
 }
 
 .titre img {
-    width: 36%;
+    width: 22%;
+    font-weight: 400;
 }
