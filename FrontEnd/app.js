@@ -47,7 +47,7 @@ const uniqueNames = [...new Set(nomsCategories)];
 const boutonsTous = document.createElement('button');
 boutonsTous.innerText='Tous';
 boutonsTous.addEventListener('click',() => {
-    afficherTravaux(travaux);
+    afficherTravauxMain(travaux);
 });
 
 filtersContainer.appendChild(boutonsTous);
@@ -57,7 +57,7 @@ categories.forEach(categorie=> {
     button.innerText=categorie.name;
     button.addEventListener('click',() => { 
     const travauxFiltres = travaux.filter(t=> t.category.id === categorie.id);
-    afficherTravaux(travauxFiltres);
+    afficherTravauxMain(travauxFiltres);
 
     });
     filtersContainer.appendChild(button);
