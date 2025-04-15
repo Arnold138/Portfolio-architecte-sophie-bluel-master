@@ -285,4 +285,22 @@ nav ul a {
 	position: relative; /* permet de positionner la croix */
 	width: 90%;
 	max-width: 600px;
-  }
+  } 
+
+/* placement du titre + boutton de la modale */
+  .titre {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+}
+
+button#openModalBtn {
+    border: 0;
+    padding-bottom: 27px;
+    font-size: 16px;
+    white-space: nowrap;
+}
+
+.titre img {
+    width: 36%;
+}
