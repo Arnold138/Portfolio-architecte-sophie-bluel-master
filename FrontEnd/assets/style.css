@@ -258,19 +258,31 @@ nav ul a {
 	font-size:18px;
 } 
 
-.modal { 
-	position: fixed;
+/* Masque la modale par défaut */
+.modal.hidden {
+	display: none;
+  }
+  
+  /* Modale en overlay */
+  .modal {
+	position: fixed;           /* recouvre toute la fenêtre, même au scroll */
 	top: 0;
-	left:0;
+	left: 0;
 	width: 100%;
 	height: 100%;
-	background: rgba(0, 0, 0, 0.5);
-	display: flex;
+	background-color: rgba(0, 0, 0, 0.5); /* voile semi-transparent */
+	display: flex;            /* pour centrer le contenu */
 	justify-content: center;
 	align-items: center;
-	z-index: 9999;
-} 
-
-.modal .hidden { 
-	display: none;
-}
+	z-index: 9999;            /* au-dessus de tout */
+  }
+  
+  /* Contenu de la modale, placé au centre */
+  .modal-content {
+	background-color: #fff;
+	padding: 20px;
+	border-radius: 8px;
+	position: relative; /* permet de positionner la croix */
+	width: 90%;
+	max-width: 600px;
+  }
