@@ -219,4 +219,41 @@ nav ul a {
 .hidden {
 		display: none; 
 
+} 
+
+.modal-content .modal-title { 
+
+	font-size:24px; 
+	margin-bottom:20px;
+	text-align:center;
+} 
+
+.projects-container {
+	display: flex; 
+	flex-wrap: wrap;
+	gap: 10px;
+	justify-content: center;
+} 
+
+.project-item { 
+
+	position:relative;
+	width:80px;
+} 
+
+.project-item img { 
+	width: 100%;
+	border:1px solid #ccc;
+	border-radius: 4px;
+} 
+
+.delete-icon { 
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	cursor: pointer;
+	background: rgba(255, 255, 255, 0.8);
+	border-radius: 40%;
+	padding:3px;
+	font-size:18px;
 }
