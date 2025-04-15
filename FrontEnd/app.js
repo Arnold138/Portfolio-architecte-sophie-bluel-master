@@ -11,7 +11,7 @@ fetch('http://localhost:5678/api/works')
 .then(data=> {
   travaux=data;
   console.log("travaux récupérés:", travaux);
-  afficherTravaux(travaux);
+  afficherTravauxMain(travaux);
 })
 .catch(error=> {
   console.error("Erreur:",error);
@@ -94,7 +94,10 @@ function afficherTravauxModal(travaux) {
 
    });
   } 
-
+  function openModal() {
+    document.getElementById("modal-modif").classList.remove("hidden");
+    afficherTravauxModal(travaux); // On utilise la version "modale"
+  }
   /* fonction de suppression d'un projet */
 
   function supprimerProjet(projetId) { 
