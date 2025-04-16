@@ -85,7 +85,7 @@ function afficherTravauxModal(travaux) {
     deleteIcon.classList.add('delete-icon');
 
     const iconImg = document.createElement('img');
-    iconImg.src = "FrontEnd\assets\icons\Vector (1).png"; // Remplace par le chemin de ton image vectorielle
+    iconImg.src = "FrontEnd/assets/icons/Vector (1).png"; // Remplace par le chemin de ton image vectorielle
     iconImg.alt = "Supprimer";
     deleteIcon.addEventListener('click',() => {
       supprimerProjet(travail.id); /* fonction suppresion*/
