@@ -1,0 +1,13 @@
+[
+    {
+      "id": 11,
+      "title": "Hôtel First Arte - New Delhi",
+      "imageUrl": "/FrontEnd/assets/images/hotel.png",
+      "categoryId": 3,
+      "userId": 1,
+      "category": {
+        "id": 3,
+        "name": "Objets"
+      }
+    }
+  ]
