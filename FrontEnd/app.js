@@ -148,3 +148,30 @@ function afficherTravauxModal(travaux) {
     closeBtn.addEventListener('click',closeModal);
 
   }) 
+
+  /*je rajoute l'evenement method post pour ajouter des projets*/
+
+  fetch('http://localhost:5678/api/works',{ 
+    method:'POST',
+    headers: {
+      'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      'Content-Type': 'multipart/form-data',
+
+    },
+    body: formData, // formData est un objet FormData contenant les données du formulaire
+  }) 
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`Erreur lors de l'ajout du projet : ${response.statusText}`);
+    }
+    return response.json();
+  })
+  .then(data => {
+    console.log("Projet ajouté :", data);
+    alert("Projet ajouté avec succès !");
+    // Ici, tu peux recharger tes travaux pour mettre à jour l'affichage
+  })
+  .catch(err => {
+    console.error(err);
+    alert("Erreur lors de l'ajout du projet");
+  });
