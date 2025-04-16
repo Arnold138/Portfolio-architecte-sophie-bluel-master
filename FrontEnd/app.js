@@ -117,7 +117,14 @@ function afficherTravauxModal(travaux) {
       }
         alert('Projet supprimé avec succès');
         /* raffraichir la galerie */
+        return fetch('http://localhost:5678/api/works'); /* on refait une requete pour recuperer les travaux ajout depuis le test*/
+    }) 
+    .then (response => response.json()) 
+    .then(data => { 
+      travaux = data; /* on met a jour la variable travaux avec les nouveaux travaux */
+      afficherTravauxMain(travaux); /* on affiche les travaux dans la galerie principale */
     })
+    
     .catch(err =>{ 
       console.error(err);
       alert('Erreur lors de la suppression du projet');
