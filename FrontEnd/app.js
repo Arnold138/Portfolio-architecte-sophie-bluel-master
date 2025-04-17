@@ -85,7 +85,7 @@ function afficherTravauxModal(travaux) {
     deleteIcon.classList.add('delete-icon');
 
     const iconImg = document.createElement('img');
-    iconImg.src = "FrontEnd/assets/icons/trash-can-solid.png"; // Remplace par le chemin de ton image vectorielle
+    iconImg.src = 'FrontEnd/assets/icons/Vectorr.png'; // Remplace par le chemin de ton image vectorielle
     iconImg.alt = "Supprimer";
 
     deleteIcon.appendChild(iconImg); // Ajoute l'image à l'icône de suppression
@@ -93,7 +93,7 @@ function afficherTravauxModal(travaux) {
       supprimerProjet(travail.id); /* fonction suppresion*/
     });
 
-    
+
     projectItem.appendChild(img); 
     projectItem.appendChild(deleteIcon) 
     projectsContainer.appendChild(projectItem);
