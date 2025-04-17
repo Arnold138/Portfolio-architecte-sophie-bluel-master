@@ -85,7 +85,7 @@ function afficherTravauxModal(travaux) {
     deleteIcon.classList.add('delete-icon');
 
     const iconImg = document.createElement('img');
-    iconImg.src = 'FrontEnd/assets/icons/trash-can-solid.png'; // Remplace par le chemin de ton image vectorielle
+    iconImg.src = "assets/icons/trash-can-solid.png"; // Remplace par le chemin de ton image vectorielle
     iconImg.alt = "Supprimer";
 
     deleteIcon.appendChild(iconImg); // Ajoute l'image à l'icône de suppression
