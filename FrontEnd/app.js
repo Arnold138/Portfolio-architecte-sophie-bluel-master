@@ -157,10 +157,10 @@ function afficherTravauxModal(travaux) {
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  const btnAjouter = document.getElementById('.btn-ajouter');
-  const btnBack = document.getElementById('.back-arrow');
-  const viewList = document.getElementById('.view--list');
-  const viewForm = document.getElementById('.view--form');
+  const btnAjouter = document.querySelector('.btn-ajouter');
+  const btnBack    = document.querySelector('.back-arrow');
+  const viewList   = document.querySelector('.view--list');
+  const viewForm   = document.querySelector('.view--form');
   const uploadForm = document.getElementById('uploadForm');
   const selectCat = document.getElementById('imageCategory');
 
