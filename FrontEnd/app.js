@@ -155,3 +155,62 @@ function afficherTravauxModal(travaux) {
 
   }) 
 
+document.addEventListener('DOMContentLoaded', () => {
+
+  const btnAjouter = document.getElementById('.btn-ajouter');
+  const btnBack = document.getElementById('.back-arrow');
+  const viewList = document.getElementById('.view--list');
+  const viewForm = document.getElementById('.view--form');
+  const uploadForm = document.getElementById('uploadForm');
+  const selectCat = document.getElementById('imageCategory');
+
+  fetch('http://localhost:5678/api/categories')
+  .then(r => r.json())
+  .then(cats => { 
+    cats.forEach(c => { 
+      const opt = document.createElement('option');
+      opt.value = c.id;
+      opt.text = c.name;
+      selectCat.appendChild(opt);
+    });
+  });
+  btnAjouter.addEventListener('click', () => {
+  viewList.classList.add('hidden');
+  viewForm.classList.remove('hidden');
+  }); 
+  btnBack.addEventListener('click', () => {
+    viewList.classList.remove('hidden');
+    viewForm.classList.add('hidden');
+  } );
+  uploadForm.addEventListener('submit', (e) => {
+    e.preventDefault(); 
+    const fileInput = document.getElementById('imageFile');
+    const title = document.getElementById('imageTitle').value;
+    const category = selectCat.value;
+
+    const formData = new FormData();
+    formData.append('image', fileInput.files[0]);
+    formData.append('title',title);
+    formData.append('category', category);
+
+    fetch('http://localhost:5678/api/works', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+      body: formData
+    })
+    .then(res => { 
+      if (!res.ok) throw new Error ('Erreur lors de l\'ajout du projet');
+      return res.json();
+    } )
+    .then (newWork => { 
+      travaux.push(newWork);
+      afficherTravauxMain(travaux); /* on affiche les travaux dans la galerie principale */
+
+      viewForm.classList.add('hidden');
+      viewList.classList.remove('hidden');
+    }) 
+    .catch(err => alert(err.message));
+});
+});
