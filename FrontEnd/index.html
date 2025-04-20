@@ -70,9 +70,10 @@
 				</div>
 
 			<div class="view view--form hidden">
-				<button class="back-arrow"><img src="/FrontEnd/assets/icons/Vector (3).png (3).png" alt="retour" class="back-icon">
-				Retour</button>
-				<h2 class="modal-title">Ajout d'une photo</h2>
+				<button class="back-arrow"><img src="assets/icons/fleche.png" alt="retour" class="back-icon">
+				</button>
+				<h2 class="modal-title">Ajouter photo</h2>
+				<p> jpg, png : 4mo max</p>
 				<form id="uploadForm">
 					<label for="imageFile">Image</label>
 					<input type="file" id="imageFile" name="image" accept="image/*" required>
@@ -81,7 +82,9 @@
 					<input type="text" id="imageTitle" name="title" required>
 
 					<label for="imageCategory">Catégorie</label>
-					<select name="category" id="imageCategory"></select>
+					<select id="imageCategory" name="category"> required>
+						<option value="" disabled selected></option>
+						</select>
 					<button type="submit" class="btn-valider">Valider</button>
 				</form>
 			</div>

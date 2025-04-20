@@ -338,4 +338,63 @@ span.close {
 	position: relative;
 	color: black;
 	background-color: #B3B3B3;
+} 
+
+
+button.btn-valider {
+    width: 30%;
+    display: block;
+    margin: 60px auto 0px;
+    height: 3%;
+    border-radius: 60px;
+    border: 1px solid #1D6154;
+    background-color: #1D6154;
+    color: white;
+    font-family: 'Syne';
+    font-weight: 700;
+    font-size: 14px;
+    padding: 8px 9px 10px 10px;
+}
+button.btn-valider::before {
+	content: "";
+	display: flex;
+	width: 468px;
+	right: 144px;
+	height: 1px;
+	bottom: 2.3em;
+	position: relative;
+	color: black;
+	background-color: #B3B3B3;
+}
+
+form#uploadForm {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+button.back-arrow {
+    border: 0px;
+    background-color: white;
+    position: relative;
+    top: -18px;
+    right: 7px;
+}
+
+input#imageTitle {
+    border: 1px;
+    box-shadow: 0px 4px 14px 0px #00000017;
+    height: 50px;
+    width: 69%;
+    margin-left: 90px;
+}
+
+input#imageFile {
+    margin: 2px auto;
+    display: flex;
+}
+
+label {
+    margin: 1px auto;
+    width: 70%;
 }
