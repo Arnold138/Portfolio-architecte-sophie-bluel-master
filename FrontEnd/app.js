@@ -1,216 +1,195 @@
-let travaux = []; 
+let travaux = [];
 
+// 1) Récupération et affichage principal des travaux
 fetch('http://localhost:5678/api/works')
-.then(response=> { 
-  if(!response.ok) {
-    throw new Error("Erreur lors de la récuperation des travaux");
-    
-  }
-  return response.json();
-})
-.then(data=> {
-  travaux=data;
-  console.log("travaux récupérés:", travaux);
-  afficherTravauxMain(travaux);
-})
-.catch(error=> {
-  console.error("Erreur:",error);
-}) 
+  .then(response => {
+    if (!response.ok) throw new Error("Erreur lors de la récupération des travaux");
+    return response.json();
+  })
+  .then(data => {
+    travaux = data;
+    console.log("travaux récupérés:", travaux);
+    afficherTravauxMain(travaux);
+  })
+  .catch(error => console.error("Erreur:", error));
 
-function afficherTravauxMain(travaux) { 
-
-  const gallery= document.querySelector('.gallery');
-  gallery.innerHTML=''; 
-
-  travaux.forEach(travail=> { 
-    const figure=document.createElement('figure');
+function afficherTravauxMain(travaux) {
+  const gallery = document.querySelector('.gallery');
+  gallery.innerHTML = '';
+  travaux.forEach(travail => {
+    const figure = document.createElement('figure');
     const img = document.createElement('img');
-    img.src=travail.imageUrl;
-    img.alt=travail.title;
-    const figcaption=document.createElement('figcaption');
-    figcaption.innerText=travail.title;
-    figure.appendChild(img);
-    figure.appendChild(figcaption);
+    img.src = travail.imageUrl;
+    img.alt = travail.title;
+    const figcaption = document.createElement('figcaption');
+    figcaption.innerText = travail.title;
+    figure.append(img, figcaption);
     gallery.appendChild(figure);
   });
-} 
+}
 
+// 2) Filtres catégories
 fetch('http://localhost:5678/api/categories')
-.then(response=> response.json())
-.then(categories=> { 
-
-
-const filtersContainer = document.querySelector('.filters');
-const nomsCategories=categories.map(categorie=> categorie.name);
-const uniqueNames = [...new Set(nomsCategories)];
-
-const boutonsTous = document.createElement('button');
-boutonsTous.innerText='Tous';
-boutonsTous.addEventListener('click',() => {
-    afficherTravauxMain(travaux);
-});
-
-filtersContainer.appendChild(boutonsTous);
-
-categories.forEach(categorie=> { 
-    const button = document.createElement('button');
-    button.innerText=categorie.name;
-    button.addEventListener('click',() => { 
-    const travauxFiltres = travaux.filter(t=> t.category.id === categorie.id);
-    afficherTravauxMain(travauxFiltres);
-
+  .then(r => r.json())
+  .then(categories => {
+    const filtersContainer = document.querySelector('.filters');
+    // Bouton "Tous"
+    const btnAll = document.createElement('button');
+    btnAll.innerText = 'Tous';
+    btnAll.addEventListener('click', () => afficherTravauxMain(travaux));
+    filtersContainer.appendChild(btnAll);
+    // Un bouton par catégorie
+    categories.forEach(c => {
+      const btn = document.createElement('button');
+      btn.innerText = c.name;
+      btn.addEventListener('click', () => {
+        const filtres = travaux.filter(t => t.category.id === c.id);
+        afficherTravauxMain(filtres);
+      });
+      filtersContainer.appendChild(btn);
     });
-    filtersContainer.appendChild(button);
-});
+  })
+  .catch(console.error);
 
-}) 
-.catch(err=> console.error(err)); 
-
-/* et affichage des projets et mise en place de la modale  */
-
+// 3) Fonctions modale / suppression
 function afficherTravauxModal(travaux) {
-  const projectsContainer= document.querySelector('.projects-container');
-  projectsContainer.innerHTML=''; /* vide le conteneur avant d'ajouter les nouveaux projets */
-  travaux.forEach(travail=> {
+  const projectsContainer = document.querySelector('.projects-container');
+  projectsContainer.innerHTML = '';
+  travaux.forEach(travail => {
+    const item = document.createElement('div');
+    item.classList.add('project-item');
+    const img = document.createElement('img');
+    img.src = travail.imageUrl;
+    img.alt = travail.title;
+    const del = document.createElement('span');
+    del.classList.add('delete-icon');
+    const icon = document.createElement('img');
+    icon.src = "assets/icons/Vectorrr.png";
+    icon.alt = "Supprimer";
+    del.appendChild(icon);
+    del.addEventListener('click', () => supprimerProjet(travail.id));
+    item.append(img, del);
+    projectsContainer.appendChild(item);
+  });
+}
+function openModal() {
+  document.getElementById('modal-modif').classList.remove('hidden');
+  afficherTravauxModal(travaux);
+}
+function closeModal() {
+  document.getElementById('modal-modif').classList.add('hidden');
+}
+function supprimerProjet(id) {
+  fetch(`http://localhost:5678/api/works/${id}`, {
+    method: 'DELETE',
+    headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+  })
+  .then(res => {
+    if (!res.ok) throw new Error('Erreur suppression projet');
+    alert('Projet supprimé !');
+    return fetch('http://localhost:5678/api/works');
+  })
+  .then(r => r.json())
+  .then(data => {
+    travaux = data;
+    afficherTravauxMain(travaux);
+  })
+  .catch(err => {
+    console.error(err);
+    alert('Erreur lors de la suppression');
+  });
+}
 
-    const projectItem = document.createElement('div');
-    projectItem.classList.add('project-item');
-
-    const img = document.createElement('img'); /* crée un élément img */
-    img.src=travail.imageUrl;
-    img.alt=travail.title;
-
-    /* on crée l'icone de suppression des projects*/ 
-    const deleteIcon = document.createElement('span');
-    deleteIcon.classList.add('delete-icon');
-
-    const iconImg = document.createElement('img');
-    iconImg.src = "assets/icons/Vectorrr.png"; // Remplace par le chemin de ton image vectorielle
-    iconImg.alt = "Supprimer";
-
-    deleteIcon.appendChild(iconImg); // Ajoute l'image à l'icône de suppression
-    deleteIcon.addEventListener('click',() => {
-      supprimerProjet(travail.id); /* fonction suppresion*/
-    });
-
-
-    projectItem.appendChild(img); 
-    projectItem.appendChild(deleteIcon) 
-    projectsContainer.appendChild(projectItem);
-
-   });
-  } 
-  function openModal() {
-    document.getElementById("modal-modif").classList.remove("hidden");
-    afficherTravauxModal(travaux); // On utilise la version "modale"
-  } 
-  function closeModal() {
-    const modal = document.getElementById("modal-modif");
-    modal.classList.add("hidden");
-  }
-  /* fonction de suppression d'un projet */
-
-  function supprimerProjet(projetId) { 
-    fetch(`http://localhost:5678/api/works/${projetId}`, {
-      method: 'DELETE',
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      }
-    })
-    .then(response => { 
-      if (!response.ok) {
-        throw new Error('Erreur lors de la suppression du projet');
-      }
-        alert('Projet supprimé avec succès');
-        /* raffraichir la galerie */
-        return fetch('http://localhost:5678/api/works'); /* on refait une requete pour recuperer les travaux ajout depuis le test*/
-    }) 
-    .then (response => response.json()) 
-    .then(data => { 
-      travaux = data; /* on met a jour la variable travaux avec les nouveaux travaux */
-      afficherTravauxMain(travaux); /* on affiche les travaux dans la galerie principale */
-    })
-    
-    .catch(err =>{ 
-      console.error(err);
-      alert('Erreur lors de la suppression du projet');
-    });
-  } 
-
-  document.addEventListener('DOMContentLoaded', () => { 
-
-    /* verifie si l'utilisateur est connecté en mode admin */
-    if (localStorage.getItem('token')) { 
-      document.getElementById('openModalBtn').style.display='block'; /* affiche le bouton d'ajout de projet */
-    } else { 
-      document.getElementById('openModalBtn').style.display='none';
-    } 
-
-    /* on atache l'evenement click sur le bouton d'ajout de projet */
-    document.getElementById('openModalBtn').addEventListener('click',openModal);
-
-    /* on atache l'evenement click sur le bouton de fermeture de la modale */
-    const closeBtn = document.querySelector('.modal-content .close');
-    closeBtn.addEventListener('click',closeModal);
-
-  }) 
-
+// 4) Tout le reste dans UN seul DOMContentLoaded
 document.addEventListener('DOMContentLoaded', () => {
+  // 4.1 Afficher/Masquer bouton modale selon token
+  const btnOpen = document.getElementById('openModalBtn');
+  if (localStorage.getItem('token')) {
+    btnOpen.style.display = 'block';
+  } else {
+    btnOpen.style.display = 'none';
+  }
+  btnOpen.addEventListener('click', openModal);
+  document.querySelector('.modal-content .close').addEventListener('click', closeModal);
 
+  // 4.2 Bascule liste vs form d’ajout
   const btnAjouter = document.querySelector('.btn-ajouter');
   const btnBack    = document.querySelector('.back-arrow');
   const viewList   = document.querySelector('.view--list');
   const viewForm   = document.querySelector('.view--form');
-  const uploadForm = document.getElementById('uploadForm');
-  const selectCat = document.getElementById('imageCategory');
-
-  fetch('http://localhost:5678/api/categories')
-  .then(r => r.json())
-  .then(cats => { 
-    cats.forEach(c => { 
-      const opt = document.createElement('option');
-      opt.value = c.id;
-      opt.text = c.name;
-      selectCat.appendChild(opt);
-    });
-  });
   btnAjouter.addEventListener('click', () => {
-  viewList.classList.add('hidden');
-  viewForm.classList.remove('hidden');
-  }); 
+    viewList.classList.add('hidden');
+    viewForm.classList.remove('hidden');
+  });
   btnBack.addEventListener('click', () => {
-    viewList.classList.remove('hidden');
     viewForm.classList.add('hidden');
-  } );
-  uploadForm.addEventListener('submit', (e) => {
-    e.preventDefault(); 
-    const fileInput = document.getElementById('imageFile');
-    const title = document.getElementById('imageTitle').value;
-    const category = selectCat.value;
+    viewList.classList.remove('hidden');
+  });
 
-    const formData = new FormData();
+  // 4.3 Injection catégories dans le select de la modale
+  const selectCat = document.getElementById('imageCategory');
+  fetch('http://localhost:5678/api/categories')
+    .then(r => r.json())
+    .then(cats => {
+      cats.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c.id;
+        opt.text  = c.name;
+        selectCat.appendChild(opt);
+      });
+    })
+    .catch(console.error);
+
+  // 4.4 Soumission du form d’ajout
+  const uploadForm = document.getElementById('uploadForm');
+  uploadForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const fileInput = document.getElementById('imageFile');
+    const title     = document.getElementById('imageTitle').value;
+    const category  = selectCat.value;
+    const formData  = new FormData();
     formData.append('image', fileInput.files[0]);
-    formData.append('title',title);
+    formData.append('title', title);
     formData.append('category', category);
 
     fetch('http://localhost:5678/api/works', {
       method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      },
+      headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` },
       body: formData
     })
-    .then(res => { 
-      if (!res.ok) throw new Error ('Erreur lors de l\'ajout du projet');
+    .then(res => {
+      if (!res.ok) throw new Error('Erreur ajout projet');
       return res.json();
-    } )
-    .then (newWork => { 
+    })
+    .then(newWork => {
       travaux.push(newWork);
-      afficherTravauxMain(travaux); /* on affiche les travaux dans la galerie principale */
-
+      afficherTravauxMain(travaux);
       viewForm.classList.add('hidden');
       viewList.classList.remove('hidden');
-    }) 
+    })
     .catch(err => alert(err.message));
-});
+  });
+
+  // 4.5 Preview du fichier image
+  const inputFile        = document.getElementById('imageFile');
+  const previewContainer = document.getElementById('previewContainer');
+  const previewImg       = document.getElementById('previewImg');
+  const fileNameDiv      = document.getElementById('fileName');
+
+  inputFile.addEventListener('change', () => {
+    const file = inputFile.files[0];
+    if (!file) {
+      previewContainer.classList.add('hidden');
+      previewImg.src         = '';
+      fileNameDiv.textContent = '';
+      return;
+    }
+    fileNameDiv.textContent = file.name;
+    const reader = new FileReader();
+    reader.onload = e => {
+      previewImg.src = e.target.result;
+      previewContainer.classList.remove('hidden');
+    };
+    reader.readAsDataURL(file);
+  });
 });

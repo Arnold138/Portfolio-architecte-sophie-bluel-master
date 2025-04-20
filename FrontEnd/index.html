@@ -75,9 +75,23 @@
 				<h2 class="modal-title">Ajouter photo</h2>
 				<p> jpg, png : 4mo max</p>
 				<form id="uploadForm">
-					<label for="imageFile">Image</label>
-					<input type="file" id="imageFile" name="image" accept="image/*" required>
+					 
+					<div id="previewContainer" class="preview-container hidden"> 
+						<img id="previewImg" alt="Aperçu de l'image"/>
+					</div>
 
+				<input type="file"
+				id="imageFile"
+				name="image"
+				accept="image/*"
+				required
+				style="display: none;"
+				>
+				<label for="imageFile" class="file-label">
+					<span class="file-icon">+</span>
+					<span>Ajouter photo</span>
+				</label>
+				<div id="fileName" class="file-name"></div>
 					<label for="imageTitle">Titre</label>
 					<input type="text" id="imageTitle" name="title" required>
 
