@@ -344,7 +344,7 @@ span.close {
 button.btn-valider {
     width: 30%;
     display: block;
-    margin: 60px auto 0px;
+    margin: 125px auto 0px;
     height: 3%;
     border-radius: 60px;
     border: 1px solid #1D6154;
@@ -370,7 +370,7 @@ button.btn-valider::before {
 form#uploadForm {
     display: flex;
     flex-direction: column;
-    gap: 28px;
+    gap: 19px;
 }
 
 button.back-arrow {
@@ -384,7 +384,7 @@ button.back-arrow {
 input#imageTitle {
     border: 1px;
     box-shadow: 0px 4px 14px 0px #00000017;
-    height: 50px;
+    height: 40px;
     width: 69%;
     margin-left: 90px;
 }
@@ -397,4 +397,26 @@ input#imageFile {
 label {
     margin: 1px auto;
     width: 70%;
+} 
+
+.view.view--form p {
+    display: flex;
+    justify-content: center;
+}
+
+label.file-label {
+    display: flex;
+    justify-content: center;
+    border-radius: 50px;
+    background-color: #CBD6DC;
+    width: 28%;
+    border: 1px solid #CBD6DC;
+    padding: 5px 5px 5px 5px;
+}
+select#imageCategory {
+    border: 1px;
+    width: 70%;
+    margin-left: 90px;
+    box-shadow: 0px 4px 14px 0px #00000017;
+    height: 40px;
 }
