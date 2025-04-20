@@ -138,7 +138,26 @@ document.addEventListener('DOMContentLoaded', () => {
         selectCat.appendChild(opt);
       });
     })
-    .catch(console.error);
+    .catch(console.error); 
+
+    /* bouton valider désactivé tant que le form n'est pas valide */
+const fileInput = document.getElementById('imageFile');
+const titleInput = document.getElementById('imageTitle');
+const selectInput = document.getElementById('imageCategory');
+const submitBtn = document.querySelector('.btn-valider');
+
+submitBtn.disabled= true;
+function checkFormValidity() { 
+  const hasfile = fileInput.files.length > 0;
+  const hasTitle = titleInput.value.trim().length >0;
+  const hasCat = selectInput.value !== '';
+  submitBtn.disabled = !(hasfile && hasTitle && hasCat);
+}
+fileInput.addEventListener('change', checkFormValidity);
+titleInput.addEventListener('input', checkFormValidity);
+selectInput.addEventListener('change', checkFormValidity);
+
+
 
   // 4.4 Soumission du form d’ajout
   const uploadForm = document.getElementById('uploadForm');

@@ -1,121 +1,135 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-	<meta charset="UTF-8">
-	<title>Sophie Bluel - Architecte d'intérieur</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
-	<meta name="description" content="">
-	<link rel="stylesheet" href="./assets/style.css">
+  <meta charset="UTF-8">
+  <title>Sophie Bluel - Architecte d'intérieur</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap"
+    rel="stylesheet"
+  >
+  <meta name="description" content="">
+  <link rel="stylesheet" href="./assets/style.css">
 </head>
 <body>
-<header>
-	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
-	<nav>
-		<ul>
-			<li>projets</li>
-			<li>contact</li>
-			<li><a href="/FrontEnd/Login.html">login</a></li>
-			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
-		</ul>
-	</nav>
-</header>
-<main>
-	<section id="introduction">
-		<figure>
-			<img src="./assets/images/sophie-bluel.png" alt="">
-		</figure>
-		<article>
-			<h2>Designer d'espace</h2>
-			<p>Je raconte votre histoire, je valorise vos idées. Je vous accompagne de la conception à la livraison finale du chantier.</p>
-			<p>Chaque projet sera étudié en commun, de façon à mettre en valeur les volumes, les matières et les couleurs dans le respect de l’esprit des lieux et le choix adapté des matériaux. Le suivi du chantier sera assuré dans le souci du détail, le respect du planning et du budget.</p>
-			<p>En cas de besoin, une équipe pluridisciplinaire peut-être constituée : architecte DPLG, décorateur(trice)</p>
-		</article>
-	</section>
-	<section id="portfolio">
-		<div class="titre"> 
-		<h2>Mes Projets </h2>
-		<button id="openModalBtn"><img src="/FrontEnd/assets/icons/Vector.png" alt="iconmodifier">Modifier</button>
-	</div>
-		<div class="filters"> </div>
-		<div class="gallery">
-			
-		</div>
-	</section>
-	<section id="contact">
-		<h2>Contact</h2>
-		<p>Vous avez un projet ? Discutons-en !</p>
-		<form action="#" method="post">
-			<label for="name">Nom</label>
-			<input type="text" name="name" id="name">
-			<label for="email">Email</label>
-			<input type="email" name="email" id="email">
-			<label for="message">Message</label>
-			<textarea name="message" id="message" cols="30" rows="10"></textarea>
-			<input type="submit" value="Envoyer">
-		</form>
-	</section>
+  <header>
+    <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
+    <nav>
+      <ul>
+        <li>projets</li>
+        <li>contact</li>
+        <li><a href="./Login.html">login</a></li>
+        <li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
+      </ul>
+    </nav>
+  </header>
 
-	<div id="modal-modif" class="modal hidden"> 
-		<div class="modal-content"> 
-			<span class="close">&times;</span>
-			
-			
-			   <div class="view view--list">
-			     <h2 class="modal-title">Galerie Photos</h2>
-				  <div class="projects-container"></div>
-				  <button class="btn-ajouter">Ajouter une photo</button>
-				</div>
+  <main>
+    <section id="introduction">
+      <figure><img src="./assets/images/sophie-bluel.png" alt=""></figure>
+      <article>
+        <h2>Designer d'espace</h2>
+        <p>Je raconte votre histoire, je valorise vos idées. Je vous accompagne …</p>
+        <!-- etc. -->
+      </article>
+    </section>
 
-			<div class="view view--form hidden">
-				<div class="upload"> 
-				<button class="back-arrow"><img src="assets/icons/fleche.png" alt="retour" class="back-icon">
-				</button>
-				<h2 class="modal-title">Ajout photo</h2>
-				<img src="assets/icons/picture-svgrepo-com 1.png" alt="image d'illustration"/>
-				</div>
-				<form id="uploadForm">
-					 
-					<div id="previewContainer" class="preview-container hidden"> 
-						<img id="previewImg" alt="Aperçu de l'image"/>
-					</div>
+    <section id="portfolio">
+      <div class="titre">
+        <h2>Mes Projets</h2>
+        <!-- le bouton doit avoir exactement cet id -->
+        <button id="openModalBtn">
+          <img src="./assets/icons/Vector.png" alt="modifier">Modifier
+        </button>
+      </div>
+      <div class="filters"></div>
+      <div class="gallery"></div>
+    </section>
 
-				<input type="file"
-				id="imageFile"
-				name="image"
-				accept="image/*"
-				required
-				style="display: none;"
-				>
-				<label for="imageFile" class="file-label">
-					<span class="file-icon">+</span>
-					<span>Ajouter photo</span>
-				</label>
-				<p> jpg, png : 4mo max</p>
-				<div id="fileName" class="file-name"></div>
-					<label for="imageTitle">Titre</label>
-					<input type="text" id="imageTitle" name="title" required>
+    <section id="contact">
+      <h2>Contact</h2>
+      <p>Vous avez un projet ? Discutons-en !</p>
+      <form action="#" method="post">
+        <label for="name">Nom</label>
+        <input type="text" id="name" name="name">
+        <!-- etc. -->
+      </form>
+    </section>
+  </main>
 
-					<label for="imageCategory">Catégorie</label>
-					<select id="imageCategory" name="category"> required>
-						<option value="" disabled selected></option>
-						</select>
-					<button type="submit" class="btn-valider">Valider</button>
-				</form>
-			</div>
-		</div>
-	</div>
-</main>
+  <!-- MODALE GLOBALE -->
+  <div id="modal-modif" class="modal hidden">
+    <div class="modal-content">
+      <span class="close">&times;</span>
 
-<footer>
-	<nav>
-		<ul>
-			<li>Mentions Légales</li>
-		</ul>
-	</nav>
-</footer>
-<script src="/FrontEnd/app.js"></script>
+      <!-- Vue liste (affichée par défaut dans la modale) -->
+      <div class="view view--list">
+        <h2 class="modal-title">Galerie Photos</h2>
+        <div class="projects-container"></div>
+        <button class="btn-ajouter">Ajouter une photo</button>
+      </div>
+
+      <!-- Vue formulaire (cachée par défaut) -->
+      <div class="view view--form hidden">
+        <button class="back-arrow">
+          <img src="./assets/icons/fleche.png" alt="retour" class="back-icon">
+        </button>
+        <h2 class="modal-title">Ajout photo</h2>
+
+        <!-- Zone d’upload avec fond clair -->
+        <div class="upload-section">
+          <img src="./assets/icons/picture-svgrepo-com 1.png" alt="illustration">
+
+          <div id="previewContainer" class="preview-container hidden">
+            <img id="previewImg" alt="Aperçu de l'image">
+          </div>
+
+          <input
+            type="file"
+            id="imageFile"
+            name="image"
+            accept="image/*"
+            required
+            style="display: none;"
+          >
+          <label for="imageFile" class="file-label">
+            <span class="file-icon">＋</span>
+            <span>Ajouter photo</span>
+          </label>
+
+          <p class="file-guideline">jpg, png : 4Mo max</p>
+          <div id="fileName" class="file-name"></div>
+        </div>
+        <!-- /upload-section -->
+
+        <form id="uploadForm">
+          <label for="imageTitle">Titre</label>
+          <input type="text" id="imageTitle" name="title" required>
+
+          <label for="imageCategory">Catégorie</label>
+          <select id="imageCategory" name="category" required>
+            <option value="" disabled selected></option>
+          </select>
+
+          <button type="submit" class="btn-valider">Valider</button>
+        </form>
+        <!-- /formulaire -->
+      </div>
+      <!-- /view--form -->
+    </div>
+    <!-- /modal-content -->
+  </div>
+  <!-- /modal-modif -->
+
+  <footer>
+    <nav>
+      <ul><li>Mentions Légales</li></ul>
+    </nav>
+  </footer>
+
+  
+  <script src="/FrontEnd/app.js"></script>
 </body>
 </html>

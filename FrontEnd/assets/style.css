@@ -344,7 +344,7 @@ span.close {
 button.btn-valider {
     width: 30%;
     display: block;
-    margin: 125px auto 0px;
+    margin: 59px auto 0px;
     height: 3%;
     border-radius: 60px;
     border: 1px solid #1D6154;
@@ -358,7 +358,7 @@ button.btn-valider {
 button.btn-valider::before {
 	content: "";
 	display: flex;
-	width: 468px;
+	width: 440px;
 	right: 144px;
 	height: 1px;
 	bottom: 2.3em;
@@ -402,6 +402,7 @@ label {
 .view.view--form p {
     display: flex;
     justify-content: center;
+    font-size: 12px;
 }
 
 label.file-label {
@@ -411,7 +412,10 @@ label.file-label {
     background-color: #CBD6DC;
     width: 28%;
     border: 1px solid #CBD6DC;
-    padding: 5px 5px 5px 5px;
+    padding: 7px 20px 7px 20px;
+    color: #306685;
+    font-weight: 500;
+    font-size: 15px;
 }
 select#imageCategory {
     border: 1px;
@@ -419,4 +423,30 @@ select#imageCategory {
     margin-left: 90px;
     box-shadow: 0px 4px 14px 0px #00000017;
     height: 40px;
+}
+.upload-section {
+    background-color: #E8F1F6;
+    width: 70%;
+    margin: 0px auto 30px;
+    padding-bottom: 10px;
+    color: #444444;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+img {
+    display: flex;
+    margin: 0px auto;
+}
+ 
+.btn-valider:disabled { 
+	background-color: #ccc;
+	color:#666;
+	cursor: not-allowed;
+}
+.btn-valider:enabled {
+	background-color: #1D6154;
+	color:white;
+	cursor: pointer;
 }
