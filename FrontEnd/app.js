@@ -195,15 +195,28 @@ selectInput.addEventListener('change', checkFormValidity);
   const previewImg       = document.getElementById('previewImg');
   const fileNameDiv      = document.getElementById('fileName');
 
+  const uploadIllustration = document.querySelector('.upload-section > img');
+  const filelabel = document.querySelector('.file-label');
+  const fileGuideline = document.querySelector('.file-guideline');
+
   inputFile.addEventListener('change', () => {
     const file = inputFile.files[0];
     if (!file) {
       previewContainer.classList.add('hidden');
       previewImg.src         = '';
       fileNameDiv.textContent = '';
+
+      uploadIllustration.classList.remove('hidden');
+      filelabel.classList.remove('hidden');
+      fileGuideline.classList.remove('hidden');
       return;
     }
     fileNameDiv.textContent = file.name;
+
+    uploadIllustration.classList.add('hidden');
+    filelabel.classList.add('hidden');
+    fileGuideline.classList.add('hidden');
+
     const reader = new FileReader();
     reader.onload = e => {
       previewImg.src = e.target.result;
