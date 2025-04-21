@@ -449,4 +449,19 @@ img {
 	background-color: #1D6154;
 	color:white;
 	cursor: pointer;
-}
+} 
+
+.preview-container {
+	width: 100%;        
+	max-width: 300px;   
+	margin: 0 auto 16px;
+	text-align: center; 
+  }
+  
+  /* 2) On contraint la taille de l’image d’aperçu */
+  .preview-container img {
+	max-width: 100%;    
+	max-height: 200px;  
+	object-fit: contain;
+	display: inline-block;
+  }
