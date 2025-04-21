@@ -199,6 +199,8 @@ selectInput.addEventListener('change', checkFormValidity);
   const filelabel = document.querySelector('.file-label');
   const fileGuideline = document.querySelector('.file-guideline');
 
+  fileNameDiv.classList.add('hidden');
+
   inputFile.addEventListener('change', () => {
     const file = inputFile.files[0];
     if (!file) {
@@ -211,11 +213,10 @@ selectInput.addEventListener('change', checkFormValidity);
       fileGuideline.classList.remove('hidden');
       return;
     }
-    fileNameDiv.textContent = file.name;
-
     uploadIllustration.classList.add('hidden');
     filelabel.classList.add('hidden');
     fileGuideline.classList.add('hidden');
+    fileNameDiv.classList.add('hidden');
 
     const reader = new FileReader();
     reader.onload = e => {
