@@ -221,7 +221,7 @@ nav ul a {
 
 } 
 
-.modal-content .modal-title {font-size: 26px;margin-bottom: 10px;text-align:center;color: black;font-family: 'Work Sans';font-weight: 400;} 
+.modal-content .modal-title {font-size: 26px;margin-bottom: 23px;text-align:center;color: black;font-family: 'Work Sans';font-weight: 400;} 
 
 .projects-container {
 	display: flex;
@@ -297,11 +297,13 @@ nav ul a {
 
 button#openModalBtn {
     border: 0;
-    padding-bottom: 27px;
+    padding-bottom: 45px;
     font-size: 14px;
-    white-space: nowrap;
+    display: flex!important;
     font-family: 'Work Sans';
     background-color: white;
+    width: 79px;
+    margin-top: 8px;
 }
 
 .titre img {
@@ -317,7 +319,7 @@ span.close {
 #modal-modif .btn-ajouter {
     width: 30%;
     display: block;
-    margin: 83px auto 0px;
+    margin: 77px auto 0px;
     height: 3%;
     border-radius: 60px;
     border: 1px solid #1D6154;
