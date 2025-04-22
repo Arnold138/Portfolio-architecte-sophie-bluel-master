@@ -192,6 +192,7 @@ footer nav ul {
     justify-content: center;
     gap: 10px;
     margin-bottom: 40px;
+    cursor: pointer;
 }
 
 .filters button {
@@ -203,6 +204,7 @@ footer nav ul {
     white-space: nowrap;
     font-size: 16px;
     padding: 10px 30px 10px 30px;
+    cursor: pointer;
 } 
 
 .filters button:hover {
@@ -226,22 +228,17 @@ nav ul a {
 .projects-container {
 	display: flex;
 	flex-wrap: wrap;
-	gap: 17px;
+	gap: 14px;
 	justify-content: flex-start;
 	width: 84%;
 	margin-left: 13%;
 	padding: 0px;
 } 
 
-.project-item { 
+.project-item {position:relative;width:80px;margin-bottom: 15px;} 
 
-	position:relative;
-	width:80px;
-} 
-
-.project-item img { 
+.project-item img {
 	width: 100%;
-	border:1px solid #ccc;
 	border-radius: 4px;
 } 
 
@@ -250,10 +247,9 @@ nav ul a {
 	top: 2px;
 	right: 2px;
 	cursor: pointer;
-	background: rgb(14 14 14 / 80%);
-	border-radius: 3px;
-	padding: 2px 4px 0px 3px;
-	font-size:18px;
+	background: #000;
+	border-radius: 0px;
+	padding: 2px 2px 2px 2px;
 	color: white;
 } 
 
@@ -304,6 +300,8 @@ button#openModalBtn {
     background-color: white;
     width: 79px;
     margin-top: 8px;
+    gap: 9px;
+    cursor: pointer;
 }
 
 .titre img {
@@ -319,7 +317,7 @@ span.close {
 #modal-modif .btn-ajouter {
     width: 30%;
     display: block;
-    margin: 77px auto 0px;
+    margin: 53px auto 0px;
     height: 3%;
     border-radius: 60px;
     border: 1px solid #1D6154;
@@ -331,10 +329,11 @@ span.close {
     padding: 8px 9px 10px 10px;
 }
 
-#modal-modif .btn-ajouter::before {content:"";
+#modal-modif .btn-ajouter::before {
+	content:"";
 	display: flex;
 	width: 468px;
-	right: 144px;
+	right: 149px;
 	height: 1px;
 	bottom: 2.3em;
 	position: relative;
