@@ -187,6 +187,19 @@ document.addEventListener('DOMContentLoaded', () => {
       .then(newWork => {
         travaux.push(newWork);
         afficherTravauxMain(travaux);
+        afficherTravauxModal(travaux);
+        fileInput.value = '';
+        titleInput.value = '';
+        selectCat.value = '';
+        submitBtn.disabled = true;
+
+        uploadIllustration.classList.remove('hidden');
+        fileLabel.classList.remove('hidden');
+        fileGuideline.classList.remove('hidden');
+        fileNameDiv.classList.add('hidden');
+        fileNameDiv.textContent='';
+        previewContainer.classList.add('hidden');
+
         viewForm.classList.add('hidden');
         viewList.classList.remove('hidden');
       })
