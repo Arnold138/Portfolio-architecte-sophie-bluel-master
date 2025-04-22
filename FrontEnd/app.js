@@ -1,8 +1,7 @@
 let travaux = [];
-
-// Récupération et affichage principal des travaux (avec JWT)
 const token = localStorage.getItem('token');
 
+// 1) Récupération et affichage principal des travaux (avec JWT)
 fetch('http://localhost:5678/api/works', {
   headers: { 'Authorization': `Bearer ${token}` }
 })
@@ -32,7 +31,7 @@ function afficherTravauxMain(travaux) {
   });
 }
 
-// Filtres catégories
+// 2) Filtres catégories
 fetch('http://localhost:5678/api/categories')
   .then(r => r.json())
   .then(categories => {
@@ -53,6 +52,7 @@ fetch('http://localhost:5678/api/categories')
   })
   .catch(console.error);
 
+// 3) Fonctions modale / suppression
 function afficherTravauxModal(travaux) {
   const projectsContainer = document.querySelector('.projects-container');
   projectsContainer.innerHTML = '';
@@ -94,7 +94,10 @@ function supprimerProjet(id) {
         headers: { 'Authorization': `Bearer ${token}` }
       });
     })
-    .then(r => r.json())
+    .then(r => {
+      if (!r.ok) throw new Error();
+      return r.json();
+    })
     .then(data => {
       travaux = data;
       afficherTravauxMain(travaux);
@@ -112,6 +115,8 @@ document.addEventListener('DOMContentLoaded', () => {
     btnOpen.style.display = 'block';
     btnOpen.addEventListener('click', openModal);
     document.querySelector('.modal-content .close').addEventListener('click', closeModal);
+  } else {
+    btnOpen.style.display = 'none';
   }
 
   // 4.2 Bascule liste vs form d’ajout
