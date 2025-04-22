@@ -1,7 +1,11 @@
 let travaux = [];
 
-// 1) Récupération et affichage principal des travaux
-fetch('http://localhost:5678/api/works')
+// Récupération et affichage principal des travaux (avec JWT)
+const token = localStorage.getItem('token');
+
+fetch('http://localhost:5678/api/works', {
+  headers: { 'Authorization': `Bearer ${token}` }
+})
   .then(response => {
     if (!response.ok) throw new Error("Erreur lors de la récupération des travaux");
     return response.json();
@@ -28,17 +32,15 @@ function afficherTravauxMain(travaux) {
   });
 }
 
-// 2) Filtres catégories
+// Filtres catégories
 fetch('http://localhost:5678/api/categories')
   .then(r => r.json())
   .then(categories => {
     const filtersContainer = document.querySelector('.filters');
-    // Bouton "Tous"
     const btnAll = document.createElement('button');
     btnAll.innerText = 'Tous';
     btnAll.addEventListener('click', () => afficherTravauxMain(travaux));
     filtersContainer.appendChild(btnAll);
-    // Un bouton par catégorie
     categories.forEach(c => {
       const btn = document.createElement('button');
       btn.innerText = c.name;
@@ -51,7 +53,6 @@ fetch('http://localhost:5678/api/categories')
   })
   .catch(console.error);
 
-// 3) Fonctions modale / suppression
 function afficherTravauxModal(travaux) {
   const projectsContainer = document.querySelector('.projects-container');
   projectsContainer.innerHTML = '';
@@ -72,51 +73,52 @@ function afficherTravauxModal(travaux) {
     projectsContainer.appendChild(item);
   });
 }
+
 function openModal() {
   document.getElementById('modal-modif').classList.remove('hidden');
   afficherTravauxModal(travaux);
 }
+
 function closeModal() {
   document.getElementById('modal-modif').classList.add('hidden');
 }
+
 function supprimerProjet(id) {
   fetch(`http://localhost:5678/api/works/${id}`, {
     method: 'DELETE',
-    headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+    headers: { 'Authorization': `Bearer ${token}` }
   })
-  .then(res => {
-    if (!res.ok) throw new Error('Erreur suppression projet');
-    alert('Projet supprimé !');
-    return fetch('http://localhost:5678/api/works');
-  })
-  .then(r => r.json())
-  .then(data => {
-    travaux = data;
-    afficherTravauxMain(travaux);
-  })
-  .catch(err => {
-    console.error(err);
-    alert('Erreur lors de la suppression');
-  });
+    .then(res => {
+      if (!res.ok) throw new Error('Erreur suppression projet');
+      return fetch('http://localhost:5678/api/works', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+    })
+    .then(r => r.json())
+    .then(data => {
+      travaux = data;
+      afficherTravauxMain(travaux);
+    })
+    .catch(err => {
+      console.error(err);
+      alert('Erreur lors de la suppression');
+    });
 }
 
-// 4) Tout le reste dans UN seul DOMContentLoaded
 document.addEventListener('DOMContentLoaded', () => {
   // 4.1 Afficher/Masquer bouton modale selon token
   const btnOpen = document.getElementById('openModalBtn');
-  if (localStorage.getItem('token')) {
+  if (token) {
     btnOpen.style.display = 'block';
-  } else {
-    btnOpen.style.display = 'none';
+    btnOpen.addEventListener('click', openModal);
+    document.querySelector('.modal-content .close').addEventListener('click', closeModal);
   }
-  btnOpen.addEventListener('click', openModal);
-  document.querySelector('.modal-content .close').addEventListener('click', closeModal);
 
   // 4.2 Bascule liste vs form d’ajout
   const btnAjouter = document.querySelector('.btn-ajouter');
-  const btnBack    = document.querySelector('.back-arrow');
-  const viewList   = document.querySelector('.view--list');
-  const viewForm   = document.querySelector('.view--form');
+  const btnBack = document.querySelector('.back-arrow');
+  const viewList = document.querySelector('.view--list');
+  const viewForm = document.querySelector('.view--form');
   btnAjouter.addEventListener('click', () => {
     viewList.classList.add('hidden');
     viewForm.classList.remove('hidden');
@@ -126,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
     viewList.classList.remove('hidden');
   });
 
-  // 4.3 Injection catégories dans le select de la modale
+  // 4.3 Injection catégories dans le select
   const selectCat = document.getElementById('imageCategory');
   fetch('http://localhost:5678/api/categories')
     .then(r => r.json())
@@ -134,89 +136,81 @@ document.addEventListener('DOMContentLoaded', () => {
       cats.forEach(c => {
         const opt = document.createElement('option');
         opt.value = c.id;
-        opt.text  = c.name;
+        opt.text = c.name;
         selectCat.appendChild(opt);
       });
     })
-    .catch(console.error); 
+    .catch(console.error);
 
-    /* bouton valider désactivé tant que le form n'est pas valide */
-const fileInput = document.getElementById('imageFile');
-const titleInput = document.getElementById('imageTitle');
-const selectInput = document.getElementById('imageCategory');
-const submitBtn = document.querySelector('.btn-valider');
+  // 4.4 Activation du bouton valider
+  const fileInput = document.getElementById('imageFile');
+  const titleInput = document.getElementById('imageTitle');
+  const selectInput = selectCat;
+  const submitBtn = document.querySelector('.btn-valider');
+  submitBtn.disabled = true;
+  function checkFormValidity() {
+    const hasFile = fileInput.files.length > 0;
+    const hasTitle = titleInput.value.trim().length > 0;
+    const hasCat = selectInput.value !== '';
+    submitBtn.disabled = !(hasFile && hasTitle && hasCat);
+  }
+  fileInput.addEventListener('change', checkFormValidity);
+  titleInput.addEventListener('input', checkFormValidity);
+  selectInput.addEventListener('change', checkFormValidity);
 
-submitBtn.disabled= true;
-function checkFormValidity() { 
-  const hasfile = fileInput.files.length > 0;
-  const hasTitle = titleInput.value.trim().length >0;
-  const hasCat = selectInput.value !== '';
-  submitBtn.disabled = !(hasfile && hasTitle && hasCat);
-}
-fileInput.addEventListener('change', checkFormValidity);
-titleInput.addEventListener('input', checkFormValidity);
-selectInput.addEventListener('change', checkFormValidity);
-
-
-
-  // 4.4 Soumission du form d’ajout
+  // 4.5 Soumission du form d’ajout
   const uploadForm = document.getElementById('uploadForm');
   uploadForm.addEventListener('submit', e => {
     e.preventDefault();
-    const fileInput = document.getElementById('imageFile');
-    const title     = document.getElementById('imageTitle').value;
-    const category  = selectCat.value;
-    const formData  = new FormData();
-    formData.append('image', fileInput.files[0]);
+    const file = fileInput.files[0];
+    const title = titleInput.value;
+    const category = selectCat.value;
+    const formData = new FormData();
+    formData.append('image', file);
     formData.append('title', title);
     formData.append('category', category);
 
     fetch('http://localhost:5678/api/works', {
       method: 'POST',
-      headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` },
+      headers: { 'Authorization': `Bearer ${token}` },
       body: formData
     })
-    .then(res => {
-      if (!res.ok) throw new Error('Erreur ajout projet');
-      return res.json();
-    })
-    .then(newWork => {
-      travaux.push(newWork);
-      afficherTravauxMain(travaux);
-      viewForm.classList.add('hidden');
-      viewList.classList.remove('hidden');
-    })
-    .catch(err => alert(err.message));
+      .then(res => {
+        if (!res.ok) throw new Error('Erreur ajout projet');
+        return res.json();
+      })
+      .then(newWork => {
+        travaux.push(newWork);
+        afficherTravauxMain(travaux);
+        viewForm.classList.add('hidden');
+        viewList.classList.remove('hidden');
+      })
+      .catch(err => alert(err.message));
   });
 
-  // 4.5 Preview du fichier image
-  const inputFile        = document.getElementById('imageFile');
+  // 4.6 Preview du fichier image
   const previewContainer = document.getElementById('previewContainer');
-  const previewImg       = document.getElementById('previewImg');
-  const fileNameDiv      = document.getElementById('fileName');
-
+  const previewImg = document.getElementById('previewImg');
+  const fileNameDiv = document.getElementById('fileName');
   const uploadIllustration = document.querySelector('.upload-section > img');
-  const filelabel = document.querySelector('.file-label');
+  const fileLabel = document.querySelector('.file-label');
   const fileGuideline = document.querySelector('.file-guideline');
 
   fileNameDiv.classList.add('hidden');
 
-  inputFile.addEventListener('change', () => {
-    const file = inputFile.files[0];
+  fileInput.addEventListener('change', () => {
+    const file = fileInput.files[0];
     if (!file) {
       previewContainer.classList.add('hidden');
-      previewImg.src         = '';
-      fileNameDiv.textContent = '';
-
+      previewImg.src = '';
       uploadIllustration.classList.remove('hidden');
-      filelabel.classList.remove('hidden');
+      fileLabel.classList.remove('hidden');
       fileGuideline.classList.remove('hidden');
       return;
     }
     uploadIllustration.classList.add('hidden');
-    filelabel.classList.add('hidden');
+    fileLabel.classList.add('hidden');
     fileGuideline.classList.add('hidden');
-    fileNameDiv.classList.add('hidden');
 
     const reader = new FileReader();
     reader.onload = e => {
