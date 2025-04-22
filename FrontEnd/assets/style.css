@@ -223,7 +223,7 @@ nav ul a {
 
 } 
 
-.modal-content .modal-title {font-size: 26px;margin-bottom: 23px;text-align:center;color: black;font-family: 'Work Sans';font-weight: 400;} 
+.modal-content .modal-title {font-size: 26px;margin-bottom: 13px;text-align:center;color: black;font-family: 'Work Sans';font-weight: 400;} 
 
 .projects-container {
 	display: flex;
@@ -281,7 +281,7 @@ nav ul a {
 	position: relative; /* permet de positionner la croix */
 	width: 90%;
 	max-width: 614px;
-	height: 550px;
+	height: 565px;
 	} 
 
 /* placement du titre + boutton de la modale */
@@ -312,6 +312,12 @@ button#openModalBtn {
 span.close {
     display: flex;
     justify-content: end;
+    font-size: 25px;
+    margin-top: 4px;
+    margin-right: 4px;
+    cursor: pointer;
+    width: 3%;
+    margin-left: auto;
 } 
 
 #modal-modif .btn-ajouter {
@@ -327,6 +333,7 @@ span.close {
     font-weight: 700;
     font-size: 14px;
     padding: 8px 9px 10px 10px;
+    cursor: pointer;
 }
 
 #modal-modif .btn-ajouter::before {
@@ -345,7 +352,7 @@ span.close {
 button.btn-valider {
     width: 30%;
     display: block;
-    margin: 33px auto 0px;
+    margin: 43px auto 0px;
     height: 3%;
     border-radius: 60px;
     border: 1px solid #1D6154;
@@ -359,8 +366,8 @@ button.btn-valider {
 button.btn-valider::before {
 	content: "";
 	display: flex;
-	width: 440px;
-	right: 144px;
+	width: 435px;
+	right: 137px;
 	height: 1px;
 	bottom: 2.3em;
 	position: relative;
@@ -380,6 +387,8 @@ button.back-arrow {
     position: relative;
     top: -18px;
     right: 7px;
+    width: 10%;
+    cursor: pointer;
 }
 
 input#imageTitle {
@@ -457,13 +466,13 @@ img {
 	max-width: 300px;
 	margin: 0 auto 16px;
 	text-align: center;
-	height: 169px;
+	height: 146px;
 	}
   
   /* 2) On contraint la taille de l’image d’aperçu */
   .preview-container img {
 	max-width: 140px;
-	height: 193px;
+	height: 170px;
 	object-fit: cover;
 	display: inline-block;
 	}
