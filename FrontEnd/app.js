@@ -101,6 +101,8 @@ function supprimerProjet(id) {
     .then(data => {
       travaux = data;
       afficherTravauxMain(travaux);
+
+      afficherTravauxModal(travaux);
     })
     .catch(err => {
       console.error(err);
