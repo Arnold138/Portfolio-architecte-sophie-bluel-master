@@ -475,4 +475,8 @@ img {
 	height: 170px;
 	object-fit: cover;
 	display: inline-block;
-	}
+	} 
+
+    span {
+        cursor: pointer;
+    }
