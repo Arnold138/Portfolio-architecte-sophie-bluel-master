@@ -109,9 +109,6 @@ function supprimerProjet(id) {
       alert('Erreur lors de la suppression');
     });
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-
   document.addEventListener('DOMContentLoaded', () => {
     
     const token = sessionStorage.getItem('token');
@@ -264,4 +261,3 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     reader.readAsDataURL(file);
   });
-});
