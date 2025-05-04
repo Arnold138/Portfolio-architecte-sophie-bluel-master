@@ -117,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
     authLink.textContent = 'Déconnexion';
     authLink.removeAttribute('href');
     authLink.style.cursor = 'pointer';
-    btnOpen.style.display = 'block';
+    btnOpen.style.display = 'flex';
 
     authLink.addEventListener('click', e => {
       e.preventDefault();
