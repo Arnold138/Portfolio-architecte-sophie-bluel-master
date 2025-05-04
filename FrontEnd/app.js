@@ -1,20 +1,4 @@
 let travaux = [];
-const token = sessionStorage.getItem('token');
-
-// 1) Récupération et affichage principal des travaux (avec JWT)
-fetch('http://localhost:5678/api/works', {
-  headers: { 'Authorization': `Bearer ${token}` }
-})
-  .then(response => {
-    if (!response.ok) throw new Error("Erreur lors de la récupération des travaux");
-    return response.json();
-  })
-  .then(data => {
-    travaux = data;
-    console.log("travaux récupérés:", travaux);
-    afficherTravauxMain(travaux);
-  })
-  .catch(error => console.error("Erreur:", error));
 
 function afficherTravauxMain(travaux) {
   const gallery = document.querySelector('.gallery');
@@ -31,28 +15,6 @@ function afficherTravauxMain(travaux) {
   });
 }
 
-// 2) Filtres catégories
-fetch('http://localhost:5678/api/categories')
-  .then(r => r.json())
-  .then(categories => {
-    const filtersContainer = document.querySelector('.filters');
-    const btnAll = document.createElement('button');
-    btnAll.innerText = 'Tous';
-    btnAll.addEventListener('click', () => afficherTravauxMain(travaux));
-    filtersContainer.appendChild(btnAll);
-    categories.forEach(c => {
-      const btn = document.createElement('button');
-      btn.innerText = c.name;
-      btn.addEventListener('click', () => {
-        const filtres = travaux.filter(t => t.category.id === c.id);
-        afficherTravauxMain(filtres);
-      });
-      filtersContainer.appendChild(btn);
-    });
-  })
-  .catch(console.error);
-
-// 3) Fonctions modale / suppression
 function afficherTravauxModal(travaux) {
   const projectsContainer = document.querySelector('.projects-container');
   projectsContainer.innerHTML = '';
@@ -84,6 +46,7 @@ function closeModal() {
 }
 
 function supprimerProjet(id) {
+  const token = sessionStorage.getItem('token');
   fetch(`http://localhost:5678/api/works/${id}`, {
     method: 'DELETE',
     headers: { 'Authorization': `Bearer ${token}` }
@@ -94,14 +57,10 @@ function supprimerProjet(id) {
         headers: { 'Authorization': `Bearer ${token}` }
       });
     })
-    .then(r => {
-      if (!r.ok) throw new Error();
-      return r.json();
-    })
+    .then(r => r.json())
     .then(data => {
       travaux = data;
       afficherTravauxMain(travaux);
-
       afficherTravauxModal(travaux);
     })
     .catch(err => {
@@ -109,40 +68,73 @@ function supprimerProjet(id) {
       alert('Erreur lors de la suppression');
     });
 }
-  document.addEventListener('DOMContentLoaded', () => {
-    
-    const token = sessionStorage.getItem('token');
-  
-  
-    const authLink = document.querySelector('#authLink');
-    const btnOpen = document.getElementById('openModalBtn');
-  
-    if (token) {
 
-      authLink.textContent = 'Déconnexion';
-      authLink.removeAttribute('href');
-      authLink.style.cursor = 'pointer';
-      btnOpen.style.display = 'block';
-  
-      authLink.addEventListener('click', e => {
-        e.preventDefault();
-        sessionStorage.removeItem('token');
-        // Après déconnexion, on redirige vers la page de login
-        window.location.href = './Login.html';
+// ─────────────── INITIALISATION ───────────────────
+
+document.addEventListener('DOMContentLoaded', () => {
+  const token = sessionStorage.getItem('token');
+
+  // 1) Récupération et affichage principal des travaux (avec JWT)
+  fetch('http://localhost:5678/api/works', {
+    headers: { 'Authorization': `Bearer ${token}` }
+  })
+    .then(response => {
+      if (!response.ok) throw new Error("Erreur lors de la récupération des travaux");
+      return response.json();
+    })
+    .then(data => {
+      travaux = data;
+      console.log("travaux récupérés:", travaux);
+      afficherTravauxMain(travaux);
+    })
+    .catch(error => console.error("Erreur:", error));
+
+  // 2) Filtres catégories
+  fetch('http://localhost:5678/api/categories')
+    .then(r => r.json())
+    .then(categories => {
+      const filtersContainer = document.querySelector('.filters');
+      const btnAll = document.createElement('button');
+      btnAll.innerText = 'Tous';
+      btnAll.addEventListener('click', () => afficherTravauxMain(travaux));
+      filtersContainer.appendChild(btnAll);
+      categories.forEach(c => {
+        const btn = document.createElement('button');
+        btn.innerText = c.name;
+        btn.addEventListener('click', () => {
+          const filtres = travaux.filter(t => t.category.id === c.id);
+          afficherTravauxMain(filtres);
+        });
+        filtersContainer.appendChild(btn);
       });
-  
-      btnOpen.addEventListener('click', openModal);
-      document.querySelector('.modal-content .close')
-              .addEventListener('click', closeModal);
-    } else {
-      // UTILISATEUR NON CONNECTÉ
-      authLink.textContent = 'Login';
-      authLink.href = './Login.html';
-      btnOpen.style.display = 'none';
-    }
-  
-  });
-  
+    })
+    .catch(console.error);
+
+  // 3) Gestion Login/Logout + bouton Modifier
+  const authLink = document.querySelector('#authLink');
+  const btnOpen = document.getElementById('openModalBtn');
+
+  if (token) {
+    authLink.textContent = 'Déconnexion';
+    authLink.removeAttribute('href');
+    authLink.style.cursor = 'pointer';
+    btnOpen.style.display = 'block';
+
+    authLink.addEventListener('click', e => {
+      e.preventDefault();
+      sessionStorage.removeItem('token');
+      window.location.href = './Login.html';
+    });
+
+    btnOpen.addEventListener('click', openModal);
+    document.querySelector('.modal-content .close')
+            .addEventListener('click', closeModal);
+  } else {
+    authLink.textContent = 'Login';
+    authLink.href = './Login.html';
+    btnOpen.style.display = 'none';
+  }
+
   // 4.2 Bascule liste vs form d’ajout
   const btnAjouter = document.querySelector('.btn-ajouter');
   const btnBack = document.querySelector('.back-arrow');
@@ -261,3 +253,4 @@ function supprimerProjet(id) {
     };
     reader.readAsDataURL(file);
   });
+});
