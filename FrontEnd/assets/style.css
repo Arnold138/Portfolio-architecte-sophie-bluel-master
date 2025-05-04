@@ -295,7 +295,7 @@ button#openModalBtn {
     border: 0;
     padding-bottom: 45px;
     font-size: 14px;
-    display: flex!important;
+    display: flex;
     font-family: 'Work Sans';
     background-color: white;
     width: 79px;
