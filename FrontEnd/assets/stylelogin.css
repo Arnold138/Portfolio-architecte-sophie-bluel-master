@@ -187,7 +187,10 @@ input.error {
     height: 25px;
 } 
 
-footer li {margin: 500px 0px 0px 0px;}
+footer li {
+    margin: 500px 0px 0px 0px;
+    padding: 0;
+}
 
 body {
     height: 1000px;
