@@ -179,4 +179,8 @@ nav a {
 footer {
     display: flex;
     justify-content: flex-end;
+} 
+input.error { 
+    border:2px solid red; 
+    box-shadow: none ;
 }
