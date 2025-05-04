@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnOpen = document.getElementById('openModalBtn');
 
   if (token) {
-    authLink.textContent = 'Déconnexion';
+    authLink.textContent = 'Logout';
     authLink.removeAttribute('href');
     authLink.style.cursor = 'pointer';
     btnOpen.style.display = 'flex';
