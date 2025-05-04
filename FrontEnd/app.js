@@ -46,7 +46,6 @@ function closeModal() {
 }
 
 function supprimerProjet(id) {
-  const token = sessionStorage.getItem('token');
   fetch(`http://localhost:5678/api/works/${id}`, {
     method: 'DELETE',
     headers: { 'Authorization': `Bearer ${token}` }
