@@ -185,4 +185,10 @@ input.error {
     border: 1.5px solid red;
     box-shadow: none;
     height: 25px;
+} 
+
+footer li {margin: 500px 0px 0px 0px;}
+
+body {
+    height: 1000px;
 }
