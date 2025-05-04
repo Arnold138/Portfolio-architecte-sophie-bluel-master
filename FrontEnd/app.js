@@ -1,5 +1,5 @@
 let travaux = [];
-const token = localStorage.getItem('token');
+const token = sessionStorage.getItem('token');
 
 // 1) Récupération et affichage principal des travaux (avec JWT)
 fetch('http://localhost:5678/api/works', {
@@ -111,16 +111,41 @@ function supprimerProjet(id) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  // 4.1 Afficher/Masquer bouton modale selon token
-  const btnOpen = document.getElementById('openModalBtn');
-  if (token) {
-    btnOpen.style.display = 'block';
-    btnOpen.addEventListener('click', openModal);
-    document.querySelector('.modal-content .close').addEventListener('click', closeModal);
-  } else {
-    btnOpen.style.display = 'none';
-  }
 
+  document.addEventListener('DOMContentLoaded', () => {
+    
+    const token = sessionStorage.getItem('token');
+  
+  
+    const authLink = document.querySelector('#authLink');
+    const btnOpen = document.getElementById('openModalBtn');
+  
+    if (token) {
+
+      authLink.textContent = 'Déconnexion';
+      authLink.removeAttribute('href');
+      authLink.style.cursor = 'pointer';
+      btnOpen.style.display = 'block';
+  
+      authLink.addEventListener('click', e => {
+        e.preventDefault();
+        sessionStorage.removeItem('token');
+        // Après déconnexion, on redirige vers la page de login
+        window.location.href = './Login.html';
+      });
+  
+      btnOpen.addEventListener('click', openModal);
+      document.querySelector('.modal-content .close')
+              .addEventListener('click', closeModal);
+    } else {
+      // UTILISATEUR NON CONNECTÉ
+      authLink.textContent = 'Login';
+      authLink.href = './Login.html';
+      btnOpen.style.display = 'none';
+    }
+  
+  });
+  
   // 4.2 Bascule liste vs form d’ajout
   const btnAjouter = document.querySelector('.btn-ajouter');
   const btnBack = document.querySelector('.back-arrow');

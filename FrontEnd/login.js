@@ -20,7 +20,7 @@ document.getElementById("loginForm").addEventListener("submit", function(e) {
     .then(data => { 
         console.log(data);
         if (data.token) {
-            localStorage.setItem("token",data.token); /* on stock le token dans le local storage */
+            sessionStorage.setItem("token",data.token); /* on stock le token dans le local storage */
             alert("Connexion réussie !"); /* va rediriger ou affiche un message */
             window.location.href = "index.html"; /* redirection vers la page d'accueil */
         } else { 
