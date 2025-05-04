@@ -43,6 +43,7 @@ function openModal() {
 
 function closeModal() {
   document.getElementById('modal-modif').classList.add('hidden');
+  resetFormulaireModal();
 }
 
 function supprimerProjet(id) {
@@ -66,6 +67,31 @@ function supprimerProjet(id) {
       console.error(err);
       alert('Erreur lors de la suppression');
     });
+}
+
+function resetFormulaireModal () {
+  const fileInput = document.getElementById('imageFile');
+  const titleInput = document.getElementById('imageTitle'); 
+  const selectCat = document.getElementById('imageCategory');
+  const previewImg = document.getElementById('previewImg');
+  const previewContainer = document.getElementById('previewContainer');
+  const uploadIllustration = document.querySelector('.upload-section > img');
+  const fileLabel = document.querySelector('.file-label');
+  const fileGuideline = document.querySelector('.file-guideline');
+  const fileNameDiv = document.getElementById('fileName');
+  const submitBtn = document.querySelector('.btn-valider');
+
+  fileInput.value = '';
+  titleInput.value = '';
+  selectCat.value = '';
+  previewImg.src = '';
+  previewContainer.classList.add('hidden');
+  uploadIllustration.classList.remove('hidden');
+  fileLabel.classList.remove('hidden');
+  fileGuideline.classList.remove('hidden');
+  fileNameDiv.classList.add('hidden');
+  fileNameDiv.textContent = '';
+  submitBtn.disabled = true;
 }
 
 // ─────────────── INITIALISATION ───────────────────
@@ -146,6 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
   btnBack.addEventListener('click', () => {
     viewForm.classList.add('hidden');
     viewList.classList.remove('hidden');
+    resetFormulaireModal();
   });
 
   // 4.3 Injection catégories dans le select
