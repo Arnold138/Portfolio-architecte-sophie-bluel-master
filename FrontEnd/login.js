@@ -36,7 +36,10 @@ document.getElementById("loginForm").addEventListener("submit", function(e) {
             emailInput.classList.add("error");
             passwordInput.classList.add("error");
             errorMsg.textContent = "Identifiant ou mot de passe incorrect";
-            errorMsg.style.display = "block";
+            errorMsg.style.display = "block"; 
+
+            emailInput.value= "";
+            passwordInput.value=""; /* on vide les champs */
         }
     })
     .catch(err => { 
