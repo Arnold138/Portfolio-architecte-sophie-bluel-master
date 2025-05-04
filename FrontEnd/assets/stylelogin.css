@@ -128,6 +128,7 @@ section#login-section h1 {
 form#loginForm {
     display: flex;
     flex-direction: column;
+    gap: 9px;
 }
 
 input {
@@ -180,7 +181,8 @@ footer {
     display: flex;
     justify-content: flex-end;
 } 
-input.error { 
-    border:2px solid red; 
-    box-shadow: none ;
+input.error {
+    border: 1.5px solid red;
+    box-shadow: none;
+    height: 25px;
 }
