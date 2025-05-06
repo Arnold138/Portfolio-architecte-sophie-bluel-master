@@ -137,6 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.addEventListener('click', () => {
           const filtres = travaux.filter(t => t.category.id === c.id);
           afficherTravauxMain(filtres);
+          activerFiltre(btn);
         });
         filtersContainer.appendChild(btn);
       });
