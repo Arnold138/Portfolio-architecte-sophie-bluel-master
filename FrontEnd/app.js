@@ -4,7 +4,7 @@ const token = sessionStorage.getItem('token');
 function activerFiltre(filtre) { 
   const buttons = document.querySelectorAll('.filters button');
   buttons.forEach(b => b.classList.remove('active'));
-  filtre.classList.classList.add('active');
+  filtre.classList.add('active');
 }
 
 function afficherTravauxMain(travaux) {
