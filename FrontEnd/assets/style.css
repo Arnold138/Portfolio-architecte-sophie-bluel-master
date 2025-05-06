@@ -479,7 +479,14 @@ img {
 	object-fit: cover;
 	display: inline-block;
 	} 
-
+	nav li img {
+		width: 30px;
+	}
+	.filters button.active {
+		background-color: #1D6154;
+		color: white;
+		border: 1px solid #1D6154;
+	}
     span {
         cursor: pointer;
     } 

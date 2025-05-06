@@ -1,4 +1,11 @@
 let travaux = [];
+const token = sessionStorage.getItem('token');
+
+function activerFiltre(filtre) { 
+  const buttons = document.querySelectorAll('.filters button');
+  buttons.forEach(b => b.classList.remove('active'));
+  filtre.classList.classList.add('active');
+}
 
 function afficherTravauxMain(travaux) {
   const gallery = document.querySelector('.gallery');
@@ -97,7 +104,7 @@ function resetFormulaireModal () {
 // ─────────────── INITIALISATION ───────────────────
 
 document.addEventListener('DOMContentLoaded', () => {
-  const token = sessionStorage.getItem('token');
+  
 
   // 1) Récupération et affichage principal des travaux (avec JWT)
   fetch('http://localhost:5678/api/works', {
@@ -121,6 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const filtersContainer = document.querySelector('.filters');
       const btnAll = document.createElement('button');
       btnAll.innerText = 'Tous';
+      btnAll.classList.add('active');
       btnAll.addEventListener('click', () => afficherTravauxMain(travaux));
       filtersContainer.appendChild(btnAll);
       categories.forEach(c => {
