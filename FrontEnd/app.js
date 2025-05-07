@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const btn = document.createElement('button');
         btn.innerText = c.name;
         btn.addEventListener('click', () => {
-          const filtres = travaux.filter(t => t.category.id === c.id);
+          const filtres = travaux.filter(t => t.categoryId == c.id);
           afficherTravauxMain(filtres);
           activerFiltre(btn);
         });
