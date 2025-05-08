@@ -130,16 +130,15 @@ document.addEventListener('DOMContentLoaded', () => {
       btnAll.innerText = 'Tous';
       btnAll.classList.add('active');
       btnAll.addEventListener('click', () => afficherTravauxMain(travaux));
+      activerFiltre(btnAll);
       filtersContainer.appendChild(btnAll);
       categories.forEach(c => {
         const btn = document.createElement('button');
         btn.innerText = c.name;
-        btn.classList.add('active');
         btn.addEventListener('click', () => {
           const filtres = travaux.filter(t => t.categoryId == c.id);
           afficherTravauxMain(filtres);
           activerFiltre(btn);
-          activerFiltre(btnAll);
           console.log("Travaux filtrés:", filtres,btn);
         });
         filtersContainer.appendChild(btn);
