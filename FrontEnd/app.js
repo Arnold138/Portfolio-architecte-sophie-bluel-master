@@ -134,6 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
       categories.forEach(c => {
         const btn = document.createElement('button');
         btn.innerText = c.name;
+        btn.classList.add('active');
         btn.addEventListener('click', () => {
           const filtres = travaux.filter(t => t.categoryId == c.id);
           afficherTravauxMain(filtres);
