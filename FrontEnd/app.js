@@ -139,6 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
           afficherTravauxMain(filtres);
           activerFiltre(btn);
           activerFiltre(btnAll);
+          console.log("Travaux filtrés:", filtres,btn);
         });
         filtersContainer.appendChild(btn);
       });
