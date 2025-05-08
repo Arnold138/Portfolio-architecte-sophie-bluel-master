@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
           const filtres = travaux.filter(t => t.categoryId == c.id);
           afficherTravauxMain(filtres);
           activerFiltre(btn);
-          console.log[travaux, c.id, filtres];
+          activerFiltre(btnAll);
         });
         filtersContainer.appendChild(btn);
       });
