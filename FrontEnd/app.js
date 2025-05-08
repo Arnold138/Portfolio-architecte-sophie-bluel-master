@@ -129,8 +129,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const btnAll = document.createElement('button');
       btnAll.innerText = 'Tous';
       btnAll.classList.add('active');
-      btnAll.addEventListener('click', () => afficherTravauxMain(travaux));
+      btnAll.addEventListener('click', () => { 
+      afficherTravauxMain(travaux);
       activerFiltre(btnAll);
+      });
       filtersContainer.appendChild(btnAll);
       categories.forEach(c => {
         const btn = document.createElement('button');
