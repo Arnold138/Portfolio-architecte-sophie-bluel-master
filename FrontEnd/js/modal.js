@@ -3,7 +3,7 @@ const token = sessionStorage.getItem('token');
 
 export function setupModalEvents() {
 
-    const btnOpen= document.querySelector('openModalBtn');
+    const btnOpen= document.querySelector('#openModalBtn');
     const btnClose= document.querySelector('.modal-content .close');
     const btnAjouter = document.querySelector('.btn-ajouter');
     const btnBack=document.querySelector('.back-arrow');

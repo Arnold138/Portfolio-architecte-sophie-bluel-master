@@ -1,12 +1,12 @@
 import { initAuth } from "./auth.js";
-import  {fetchTrvaux} from "./travaux.js";
+import  {fetchTravaux} from "./travaux.js";
 import { fetchCategories } from"./categories.js";
 import { setupModalEvents } from "./modal.js";
 import { setupUploadEvents } from "./upload.js";
 
 document.addEventListener('DOMContentLoaded', () => {
     initAuth();
-    fetchTrvaux();
+    fetchTravaux();
     fetchCategories();
     setupModalEvents();
     setupUploadEvents();
