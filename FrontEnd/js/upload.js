@@ -1,83 +1,87 @@
-// upload.js - Gère la prévisualisation, la validation et l'envoi du formulaire d'ajout
+// modal.js corrigé - Gestion des événements modale
 
 import { travaux, afficherTravauxMain } from './travaux.js';
-import { closeModal } from './modal.js';
-
 const token = sessionStorage.getItem('token');
 
-export function setupUploadEvents() {
-  const uploadForm = document.getElementById('uploadForm');
-  const fileInput = document.getElementById('imageFile');
-  const titleInput = document.getElementById('imageTitle');
-  const selectCat = document.getElementById('imageCategory');
-  const submitBtn = document.querySelector('.btn-valider');
+export function setupModalEvents() {
+  const btnOpen = document.querySelector('#openModalBtn');
+  const btnClose = document.querySelector('.modal-content .close');
+  const btnAjouter = document.querySelector('.btn-ajouter');
+  const btnBack = document.querySelector('.back-arrow');
+  const viewList = document.querySelector('.view--list');
+  const viewForm = document.querySelector('.view--form');
 
-  const previewImg = document.getElementById('previewImg');
-  const previewContainer = document.getElementById('previewContainer');
-  const fileNameDiv = document.getElementById('fileName');
-  const uploadIllustration = document.querySelector('.upload-section > img');
-  const fileLabel = document.querySelector('.file-label');
-  const fileGuideline = document.querySelector('.file-guideline');
+  if (btnOpen) btnOpen.addEventListener('click', openModal);
+  if (btnClose) btnClose.addEventListener('click', closeModal);
+  if (btnAjouter) btnAjouter.addEventListener('click', () => {
+    viewList.classList.add('hidden');
+    viewForm.classList.remove('hidden');
+  });
+  if (btnBack) btnBack.addEventListener('click', () => {
+    viewForm.classList.add('hidden');
+    viewList.classList.remove('hidden');
+    resetFormulaireModal();
+  });
+}
 
-  function checkFormValidity() {
-    const hasFile = fileInput.files.length > 0;
-    const hasTitle = titleInput.value.trim().length > 0;
-    const hasCat = selectCat.value !== '';
-    submitBtn.disabled = !(hasFile && hasTitle && hasCat);
-  }
+export function openModal() {
+  document.getElementById('modal-modif').classList.remove('hidden');
+  afficherTravauxModal(travaux);
+}
 
-  fileInput.addEventListener('change', checkFormValidity);
-  titleInput.addEventListener('input', checkFormValidity);
-  selectCat.addEventListener('change', checkFormValidity);
+export function closeModal() {
+  document.getElementById('modal-modif').classList.add('hidden');
+  resetFormulaireModal();
+}
 
-  uploadForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const file = fileInput.files[0];
-    const title = titleInput.value;
-    const category = selectCat.value;
+function afficherTravauxModal(travaux) {
+  const container = document.querySelector('.projects-container');
+  container.innerHTML = '';
+  travaux.forEach(travail => {
+    const item = document.createElement('div');
+    item.classList.add('project-item');
+    const img = document.createElement('img');
+    img.src = travail.imageUrl;
+    img.alt = travail.title;
+    const del = document.createElement('span');
+    del.classList.add('delete-icon');
+    const icon = document.createElement('img');
+    icon.src = 'assets/icons/Vectorrr.png';
+    icon.alt = 'Supprimer';
+    del.appendChild(icon);
+    del.addEventListener('click', () => supprimerProjet(travail.id));
+    item.append(img, del);
+    container.appendChild(item);
+  });
+}
 
-    const formData = new FormData();
-    formData.append('image', file);
-    formData.append('title', title);
-    formData.append('category', category);
-
-    fetch('http://localhost:5678/api/works', {
-      method: 'POST',
-      headers: { Authorization: `Bearer ${token}` },
-      body: formData,
+function supprimerProjet(id) {
+  fetch(`http://localhost:5678/api/works/${id}`, {
+    method: 'DELETE',
+    headers: { 'Authorization': `Bearer ${token}` }
+  })
+    .then(res => res.json())
+    .then(() => fetch('http://localhost:5678/api/works', {
+      headers: { 'Authorization': `Bearer ${token}` }
+    }))
+    .then(res => res.json())
+    .then(data => {
+      travaux.length = 0;
+      travaux.push(...data);
+      afficherTravauxMain(travaux);
+      afficherTravauxModal(travaux);
     })
-      .then((res) => {
-        if (!res.ok) throw new Error('Erreur ajout projet');
-        return res.json();
-      })
-      .then((newWork) => {
-        travaux.push(newWork);
-        afficherTravauxMain(travaux);
-        closeModal();
-      })
-      .catch((err) => alert(err.message));
-  });
+    .catch(err => alert('Erreur suppression'));
+}
 
-  fileInput.addEventListener('change', () => {
-    const file = fileInput.files[0];
-    if (!file) {
-      previewContainer.classList.add('hidden');
-      previewImg.src = '';
-      uploadIllustration.classList.remove('hidden');
-      fileLabel.classList.remove('hidden');
-      fileGuideline.classList.remove('hidden');
-      return;
-    }
-
-    uploadIllustration.classList.add('hidden');
-    fileLabel.classList.add('hidden');
-    fileGuideline.classList.add('hidden');
-
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      previewImg.src = e.target.result;
-      previewContainer.classList.remove('hidden');
-    };
-    reader.readAsDataURL(file);
-  });
+function resetFormulaireModal() {
+  document.getElementById('uploadForm').reset();
+  document.getElementById('previewContainer').classList.add('hidden');
+  document.getElementById('previewImg').src = '';
+  document.getElementById('fileName').classList.add('hidden');
+  document.getElementById('fileName').textContent = '';
+  document.querySelector('.upload-section > img').classList.remove('hidden');
+  document.querySelector('.file-label').classList.remove('hidden');
+  document.querySelector('.file-guideline').classList.remove('hidden');
+  document.querySelector('.btn-valider').disabled = true;
 }
