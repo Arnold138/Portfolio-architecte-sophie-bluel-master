@@ -27,7 +27,7 @@ function initAuth() {
     authLink.addEventListener("click", (e) => {
       e.preventDefault();
       sessionStorage.removeItem("token");
-      window.location.href = "./Login.html";
+      window.location.href = "./login.html";
     });
 
     btnOpen.addEventListener("click", openModal);
