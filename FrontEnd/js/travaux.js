@@ -1,39 +1,36 @@
+// travaux.js - Gestion des projets affichés sur la page
+
 export let travaux = [];
+const token = sessionStorage.getItem('token');
 
-const token = sessionStorage.getItem("token");
-
-export function fetchTravaux() { 
-  fetch("http://localhost:5678/api/works", {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+export function fetchTravaux() {
+  fetch('http://localhost:5678/api/works', {
+    headers: { Authorization: `Bearer ${token}` },
   })
-    .then((response) => response.json())
+    .then((response) => {
+      if (!response.ok) throw new Error('Erreur lors de la récupération des travaux');
+      return response.json();
+    })
     .then((data) => {
-      travaux.length = 0;             // Vider le tableau
-      travaux.push(...data);          // Ajouter les nouveaux travaux
+      travaux = data;
       afficherTravauxMain(travaux);
     })
-    .catch((error) => {
-      console.error("Erreur lors de la récupération des travaux :", error);
-    });
+    .catch((error) => console.error('Erreur:', error));
 }
 
-export function afficherTravauxMain(travaux) { 
-  const gallery = document.querySelector(".gallery");
-  gallery.innerHTML = ""; // Vider la galerie avant d'ajouter les nouveaux travaux
+export function afficherTravauxMain(travaux) {
+  const gallery = document.querySelector('.gallery');
+  if (!gallery) return;
+  gallery.innerHTML = '';
 
   travaux.forEach((travail) => {
-    const figure = document.createElement("figure");
-    const image = document.createElement("img");
-    image.src = travail.imageUrl;
-    image.alt = travail.title;
-    const figcaption = document.createElement("figcaption");
-    figcaption.textContent = travail.title;
-
-    figure.appendChild(image);
-    figure.appendChild(figcaption);
+    const figure = document.createElement('figure');
+    const img = document.createElement('img');
+    img.src = travail.imageUrl;
+    img.alt = travail.title;
+    const figcaption = document.createElement('figcaption');
+    figcaption.innerText = travail.title;
+    figure.append(img, figcaption);
     gallery.appendChild(figure);
   });
 }

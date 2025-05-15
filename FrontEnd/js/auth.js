@@ -1,9 +1,12 @@
-// auth.js - Gère la connexion et la déconnexion depuis le site principal (pas la page de login)
+// auth.js - Gère la connexion et la déconnexion (index.html uniquement)
 
 export function initAuth() {
   const token = sessionStorage.getItem('token');
   const authLink = document.querySelector('#authLink');
   const btnOpen = document.getElementById('openModalBtn');
+
+  // Sécurité : ne pas crasher si les éléments sont absents
+  if (!authLink || !btnOpen) return;
 
   if (token) {
     authLink.textContent = 'Logout';
