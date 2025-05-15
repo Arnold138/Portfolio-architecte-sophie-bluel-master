@@ -1,3 +1,5 @@
+import './reducaap.js';
+// main.js - Point d'entrée principal de l'application
 import { initAuth } from "./auth.js";
 import  {fetchTravaux} from "./travaux.js";
 import { fetchCategories } from"./categories.js";
