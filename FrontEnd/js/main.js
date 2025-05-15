@@ -9,6 +9,7 @@ import { setupUploadEvents } from "./upload.js";
 document.addEventListener('DOMContentLoaded', () => {
     initAuth();
     fetchTravaux();
+    fetchCategoriesForFilters();
     setupModalEvents();
     setupUploadEvents();
 });
