@@ -381,7 +381,7 @@ button.btn-valider::before {
 form#uploadForm {
     display: flex;
     flex-direction: column;
-    gap: 19px;
+    gap: 12px;
 }
 
 button.back-arrow {
