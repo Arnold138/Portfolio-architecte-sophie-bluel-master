@@ -134,6 +134,7 @@ function fetchTravaux() {
     .then((data) => {
       travaux = data;
       afficherTravauxMain(travaux);
+      afficherTravauxModal(travaux);
     })
     .catch((error) => console.error("Erreur:", error));
 }
@@ -246,15 +247,7 @@ function supprimerProjet(id) {
   })
     .then((res) => {
       if (!res.ok) throw new Error("Erreur suppression projet");
-      return fetch("http://localhost:5678/api/works", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-    })
-    .then((r) => r.json())
-    .then((data) => {
-      travaux = data;
-      afficherTravauxMain(travaux);
-      afficherTravauxModal(travaux);
+      fetchTravaux(); // <-- Appelle simplement la fonction factorisée
     })
     .catch((err) => {
       console.error(err);
