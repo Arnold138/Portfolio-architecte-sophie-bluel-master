@@ -211,12 +211,14 @@ function openModal() {
   afficherTravauxModal(travaux); 
 
   document.querySelector(".view--form").classList.add("hidden");
-  document.querySelector("view--list").classList.remove("hidden");
+  document.querySelector(".view--list").classList.remove("hidden");
 }
 
 function closeModal() {
   document.getElementById("modal-modif").classList.add("hidden");
   resetFormulaireModal();
+  document.querySelector(".view--form").classList.add("hidden");
+  document.querySelector(".view--list").classList.remove("hidden");
 }
 
 function afficherTravauxModal(travaux) {
@@ -234,13 +236,13 @@ function afficherTravauxModal(travaux) {
     icon.src = "assets/icons/Vectorrr.png";
     icon.alt = "Supprimer";
     del.appendChild(icon);
-    del.addEventListener("click", () => supprimerProjet(travail.id));
+    del.addEventListener("click", () => deleteProjet(travail.id));
     item.append(img, del);
     projectsContainer.appendChild(item);
   });
 }
 
-function supprimerProjet(id) {
+function deleteProjet(id) {
   fetch(`http://localhost:5678/api/works/${id}`, {
     method: "DELETE",
     headers: { Authorization: `Bearer ${token}` },
