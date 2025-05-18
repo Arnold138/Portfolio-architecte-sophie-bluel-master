@@ -1,5 +1,6 @@
 // ===== Variables globales =====
 let travaux = [];
+let categories = [];
 const token = sessionStorage.getItem("token");
 
 // ====== UPLOAD ======
@@ -50,6 +51,7 @@ function setupUploadEvents() {
         travaux.push(newWork);
         afficherTravauxMain(travaux);
         afficherTravauxModal(travaux);
+        document.getElementById("modal-modif").classList.add("hidden");
         resetFormulaireModal();
         document.querySelector(".view--form").classList.add("hidden");
         document.querySelector(".view--list").classList.remove("hidden");
@@ -86,7 +88,9 @@ document.addEventListener("DOMContentLoaded", initApp);
 function initApp() {
   initAuth();
   fetchTravaux();
-  fetchCategoriesForFilters();
+  fetchCategories().then(() => {
+    afficherCategoriesFiltres();
+  });
   setupModalEvents();
   setupUploadEvents();
 }
@@ -149,54 +153,50 @@ function afficherTravauxMain(travaux) {
   });
 }
 
-// ====== CATEGORIES / FILTRES ======
-function fetchCategoriesForFilters() {
-  fetch("http://localhost:5678/api/categories")
-    .then((r) => r.json())
-    .then((categories) => {
-      const filtersContainer = document.querySelector(".filters");
-      filtersContainer.innerHTML = '';
-
-      const btnAll = document.createElement("button");
-      btnAll.innerText = "Tous";
-      btnAll.classList.add("active");
-      btnAll.addEventListener("click", () => {
-        afficherTravauxMain(travaux);
-        activerFiltre(btnAll);
-      });
-      filtersContainer.appendChild(btnAll);
-
-      categories.forEach((c) => {
-        const btn = document.createElement("button");
-        btn.innerText = c.name;
-        btn.addEventListener("click", () => {
-          const filtres = travaux.filter((t) => t.categoryId == c.id);
-          afficherTravauxMain(filtres);
-          activerFiltre(btn);
-        });
-        filtersContainer.appendChild(btn);
-      });
+function fetchCategories () { 
+  return fetch("http://localhost:5678/api/categories")
+    .then((res) => res.json())
+    .then((data) => {
+      categories = data; //on stock les catégories
+      return categories;
     })
-    .catch(console.error);
 }
+function afficherCategoriesFiltres() {
+  const filtersContainer = document.querySelector(".filters");
+  filtersContainer.innerHTML = '';
 
-function fetchCategoriesForSelect() {
+  const btnAll = document.createElement("button");
+  btnAll.innerText = "Tous";
+  btnAll.classList.add("active");
+  btnAll.addEventListener("click", () => {
+    afficherTravauxMain(travaux);
+    activerFiltre(btnAll);
+  });
+  filtersContainer.appendChild(btnAll);
+
+  categories.forEach((c) => {
+    const btn = document.createElement("button");
+    btn.innerText = c.name;
+    btn.addEventListener("click", () => {
+      const filtres = travaux.filter((t) => t.categoryId == c.id);
+      afficherTravauxMain(filtres);
+      activerFiltre(btn);
+    });
+    filtersContainer.appendChild(btn);
+  });
+}
+function afficherCategoriesSelect() {
   const selectCat = document.getElementById("imageCategory");
   if (!selectCat) return;
   selectCat.innerHTML = '<option value="" disabled selected></option>';
-
-  fetch("http://localhost:5678/api/categories")
-    .then(res => res.json())
-    .then(cats => {
-      cats.forEach((c) => {
-        const opt = document.createElement("option");
-        opt.value = c.id;
-        opt.textContent = c.name;
-        selectCat.appendChild(opt);
-      });
-    })
-    .catch(console.error);
+  categories.forEach((c) => {
+    const opt = document.createElement("option");
+    opt.value = c.id;
+    opt.textContent = c.name;
+    selectCat.appendChild(opt);
+  });
 }
+
 
 function activerFiltre(filtre) {
   const buttons = document.querySelectorAll(".filters button");
@@ -207,7 +207,10 @@ function activerFiltre(filtre) {
 // ====== MODALE ======
 function openModal() {
   document.getElementById("modal-modif").classList.remove("hidden");
-  afficherTravauxModal(travaux);
+  afficherTravauxModal(travaux); 
+
+  document.querySelector(".view--form").classList.add("hidden");
+  document.querySelector("view--list").classList.remove("hidden");
 }
 
 function closeModal() {
@@ -293,7 +296,7 @@ function setupModalEvents() {
   btnAjouter.addEventListener("click", () => {
     viewList.classList.add("hidden");
     viewForm.classList.remove("hidden");
-    fetchCategoriesForSelect();
+    afficherCategoriesSelect();
   });
 
   btnBack.addEventListener("click", () => {
