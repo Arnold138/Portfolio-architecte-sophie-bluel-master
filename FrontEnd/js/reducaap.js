@@ -101,10 +101,10 @@ function initAuth() {
   const btnOpen = document.getElementById("openModalBtn");
 
   if (token) {
-    authLink.textContent = "Logout";
+    authLink.textContent = "logout";
     authLink.removeAttribute("href");
     authLink.style.cursor = "pointer";
-    btnOpen.style.display = "flex";
+    btnOpen.style.display = "flex"; 
 
     authLink.addEventListener("click", (e) => {
       e.preventDefault();
@@ -116,7 +116,7 @@ function initAuth() {
     document.querySelector(".modal-content .close")
             .addEventListener("click", closeModal);
   } else {
-    authLink.textContent = "Login";
+    authLink.textContent = "login";
     authLink.href = "./login.html";
     btnOpen.style.display = "none";
   }
@@ -124,9 +124,7 @@ function initAuth() {
 
 // ====== TRAVAUX ======
 function fetchTravaux() {
-  fetch("http://localhost:5678/api/works", {
-    headers: { Authorization: `Bearer ${token}` },
-  })
+  fetch("http://localhost:5678/api/works")
     .then((response) => {
       if (!response.ok) throw new Error("Erreur lors de la récupération des travaux");
       return response.json();
@@ -164,7 +162,11 @@ function fetchCategories () {
 }
 function afficherCategoriesFiltres() {
   const filtersContainer = document.querySelector(".filters");
-  filtersContainer.innerHTML = '';
+  filtersContainer.innerHTML = ''; 
+  if (token) {
+
+    return ;
+  }
 
   const btnAll = document.createElement("button");
   btnAll.innerText = "Tous";

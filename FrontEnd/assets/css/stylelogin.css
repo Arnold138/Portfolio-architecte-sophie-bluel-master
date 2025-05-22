@@ -194,4 +194,8 @@ footer li {
 
 body {
     height: 1000px;
+} 
+img {
+    width: 20px;
+    padding-top: 2px;
 }

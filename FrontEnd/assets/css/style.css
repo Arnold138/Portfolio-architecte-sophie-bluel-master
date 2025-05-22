@@ -247,8 +247,8 @@ nav ul a {
 
 .delete-icon {
 	position: absolute;
-	top: 2px;
-	right: 2px;
+	top: 5px;
+	right: 3px;
 	cursor: pointer;
 	background: #000;
 	border-radius: 0px;
@@ -353,7 +353,7 @@ span.close {
 
 
 button.btn-valider {
-    width: 30%;
+    width: 38%;
     display: block;
     margin: 43px auto 0px;
     height: 3%;
@@ -369,8 +369,8 @@ button.btn-valider {
 button.btn-valider::before {
 	content: "";
 	display: flex;
-	width: 435px;
-	right: 137px;
+	width: 430px;
+	right: 112px;
 	height: 1px;
 	bottom: 2.3em;
 	position: relative;
@@ -381,7 +381,7 @@ button.btn-valider::before {
 form#uploadForm {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 7px;
 }
 
 button.back-arrow {
@@ -397,7 +397,7 @@ button.back-arrow {
 input#imageTitle {
     border: 1px;
     box-shadow: 0px 4px 14px 0px #00000017;
-    height: 40px;
+    height: 45px;
     width: 69%;
     margin-left: 90px;
 }
@@ -423,9 +423,9 @@ label.file-label {
     justify-content: center;
     border-radius: 50px;
     background-color: #CBD6DC;
-    width: 28%;
+    width: 29%;
     border: 1px solid #CBD6DC;
-    padding: 7px 20px 7px 20px;
+    padding: 8px 22px 8px 22px;
     color: #306685;
     font-weight: 500;
     font-size: 15px;
@@ -435,7 +435,7 @@ select#imageCategory {
     width: 70%;
     margin-left: 90px;
     box-shadow: 0px 4px 14px 0px #00000017;
-    height: 40px;
+    height: 45px;
 }
 .upload-section {
     background-color: #E8F1F6;
@@ -445,7 +445,8 @@ select#imageCategory {
     color: #444444;
     display: flex;
     flex-direction: column;
-    gap: 13px;
+    gap: 12px;
+    height: 169px;
 }
 
 img {
@@ -453,10 +454,11 @@ img {
     margin: 0px auto;
 }
  
-.btn-valider:disabled { 
+.btn-valider:disabled {
 	background-color: #ccc;
 	color:#666;
 	cursor: not-allowed;
+	border: 1px solid gray;
 }
 .btn-valider:enabled {
 	background-color: #1D6154;
@@ -475,12 +477,12 @@ img {
   /* 2) On contraint la taille de l’image d’aperçu */
   .preview-container img {
 	max-width: 140px;
-	height: 170px;
+	height: 177px;
 	object-fit: cover;
 	display: inline-block;
 	} 
 	nav li img {
-		width: 23px;
+		width: 20px;
 	}
 	.filters button.active {
 		background-color: #1D6154;
@@ -490,3 +492,7 @@ img {
     span {
         cursor: pointer;
     } 
+	label.file-label span {
+		color: #306685;
+		background: #CBD6DC;
+	}
