@@ -93,6 +93,9 @@ function initApp() {
   });
   setupModalEvents();
   setupUploadEvents();
+  document.getElementById("modal-modif").addEventListener("click", function(e) {
+    if (e.target === this) closeModal();
+  });
 }
 
 // ====== AUTHENTIFICATION & MODALE ======
@@ -301,4 +304,4 @@ function setupModalEvents() {
     viewList.classList.remove("hidden");
     resetFormulaireModal();
   });
-}
+}i
